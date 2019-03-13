@@ -46,6 +46,7 @@
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "lodash": "^4.17.11"
   }
 }

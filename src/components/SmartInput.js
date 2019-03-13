@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { validator } from '../helpers/validators';
 import { query } from '../actions/ReduxSmartFormsActions'
+import classNames from 'classnames'
 
 export default class SmartInput extends Component {
 
@@ -10,10 +11,13 @@ export default class SmartInput extends Component {
 
     this.state = {
       queryDelay: null,
-      typingDelay: null
+      typingDelay: null,
+      focused: false
     }
 
     this.onChange = this.onChange.bind(this)
+    this.onFocus = this.onFocus.bind(this)
+    this.onBlur = this.onBlur.bind(this)
   }
 
   componentDidMount() {
@@ -100,17 +104,42 @@ export default class SmartInput extends Component {
     })
   }
 
+  onFocus () {
+
+    this.setState({
+      focused: true
+    })
+  }
+
+  onBlur() {
+
+    this.setState({
+      focused: false
+    })
+  }
+
   render () {
 
+    let { name, delayError, match, validation, query, focusedClassName, errorClassName, dispatch, form, className, ...rest} = this.props
     let input = this.props.form.data[this.props.name]
     let value = ''
+    let error, typing
 
     if (input) {
 
       value = input.value
+      error = input.error
+      typing = input.typing
     }
 
-    return <input onChange={this.onChange} value={value} />
+    let formInputsClasses = classNames(
+      [className],
+      {
+        [focusedClassName]: this.state.focused && (!error || typing),
+        [errorClassName]: error && !typing
+      }
+    )
+
+    return <input {...rest} className={formInputsClasses} onChange={this.onChange} onBlur={this.onBlur} onFocus={this.onFocus} value={value} />
   }
 }
-
