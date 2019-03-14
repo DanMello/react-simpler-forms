@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'redux'
 import { validator } from '../helpers/validators'
+import matchInputs from '../helpers/matchInputs'
 import _ from 'lodash'
 
 const FilterData = function (WrappedComponent) {
@@ -83,19 +84,7 @@ const MatchInputs = function (WrappedComponent) {
 
       if (!_.isEmpty(data)) {
 
-        let matchingGroups = Object.keys(data)
-          .filter(input => data[input].match)
-          .reduce((result, item) => ({
-            ...result,
-            [data[item].match]: [
-              ...(result[data[item].match] || []),
-              data[item]
-            ]
-          }), {})
-
-        allMatch = Object.keys(matchingGroups)
-          .map(a => matchingGroups[a].every(b => matchingGroups[a][0].value === b.value))
-          .every(item => !!item)
+        allMatch = matchInputs(data)
       }
 
       return (

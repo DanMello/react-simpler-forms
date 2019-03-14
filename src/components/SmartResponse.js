@@ -15,7 +15,6 @@ export default class SmartResponse extends Component {
       queryResponse = input.queryResponse
     }
 
-
     if (error === false && matchError) {
 
       let data = this.props.form.data

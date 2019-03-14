@@ -25,7 +25,8 @@ export default class SmartInput extends Component {
     let data = {
       value: '',
       step: this.props.form.step,
-      error: null
+      error: null,
+      validators: this.props.validation
     }
 
     if (this.props.query) {
@@ -59,22 +60,6 @@ export default class SmartInput extends Component {
       error: validator(this.props.validation.methods, e.target.value)
     }
 
-    if (this.props.query && !data.error) {
-
-      data.queryVerified = false
-      data.queryResponse = null
-
-      this.setState({
-        queryDelay: setTimeout(() => {
-
-          let value = this.props.form.data[this.props.name].value
-
-          this.props.dispatch(query(this.props.name, value, this.props.query.url))
-
-        }, this.props.query.delayAfterValidated)
-      })
-    }
-
     if (this.props.delayError) {
 
       data.typing = true
@@ -92,6 +77,23 @@ export default class SmartInput extends Component {
             }
           })
         }, this.props.delayError)
+      })
+    }
+
+    if (this.props.query && !data.error) {
+
+      data.queryVerified = false
+      data.queryResponse = null
+      data.typing = false
+
+      this.setState({
+        queryDelay: setTimeout(() => {
+
+          let value = this.props.form.data[this.props.name].value
+
+          this.props.dispatch(query(this.props.name, value, this.props.query.url))
+
+        }, 350)
       })
     }
 

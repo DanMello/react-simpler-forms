@@ -1,8 +1,6 @@
 export default function reducer(state={
   step: 0,
   data: {},
-  typingDelays: {},
-  queryInputs: {},
   loading: false,
   error: false,
   response: null,
@@ -19,18 +17,25 @@ export default function reducer(state={
             ...state.data[action.payload.property],
             ...action.payload.data
           }
-        },
-        typingDelays: {
-          ...state.typingDelays,
-          ...action.payload.typingDelays
-        },
-        queryInputs: {
-          ...state.queryInputs,
-          ...action.payload.queryInputs
         }
       }
     }
-    case 'FORM_RESET_FIELDS': {    
+    case 'FORM_MULTIPLE_INPUT_CHANGE': {
+
+      let newData = action.payload.data
+
+      return {
+        ...state,
+        data: Object.keys(newData).reduce((diff, key) => {
+          if (state.data[key] === newData[key]) return diff
+          return {
+            ...diff,
+            [key]: newData[key]
+          }
+        }, {})
+      }
+    }
+    case 'FORM_RESET_FIELDS': {  
       return {
         ...state, 
         data: Object.keys(state.data)
