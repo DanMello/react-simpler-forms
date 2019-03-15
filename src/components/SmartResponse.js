@@ -4,7 +4,7 @@ export default class SmartResponse extends Component {
 
   render () {
 
-    let { errorClassName, successClassName, matchError, radioError, ...rest } = this.props
+    let { errorClassName, successClassName, matchError, selectError, ...rest } = this.props
     let input = this.props.form.data[this.props.for]
     let error, queryResponse, typing
 
@@ -48,9 +48,9 @@ export default class SmartResponse extends Component {
       }
     }
 
-    if (error === true && radioError) {
+    if (error === true && selectError) {
 
-      error = radioError
+      error = selectError
     }
 
     return <div className={error ? errorClassName : successClassName}>{!typing ? queryResponse || error : null}</div>

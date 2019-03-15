@@ -29,7 +29,7 @@ class SmartButton extends Component {
         ...acc,
         [current]: {
           ...formData[current],
-          error: !formData[current].error ? validator(formData[current].validators.methods, formData[current].value) : formData[current].error
+          error: !formData[current].error ? validator(formData[current].validators, formData[current].value) : formData[current].error
         }
       }), {})
 
