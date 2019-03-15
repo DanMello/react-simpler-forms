@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { validator } from '../helpers/validators';
 import matchInputs from '../helpers/matchInputs'
 import classNames from 'classnames'
+import ReduxSmartForms from '../HOC/ReduxSmartForms' 
 
-export default class SmartButton extends Component {
+class SmartButton extends Component {
 
   constructor () {
 
@@ -23,20 +24,25 @@ export default class SmartButton extends Component {
 
     let validatedInputs = Object.keys(formData)
       .filter(property => formData[property].step === step)
+      .filter(property => !!formData[property].validators)
       .reduce((acc, current) => ({
         ...acc,
         [current]: {
           ...formData[current],
-          error: validator(formData[current].validators.methods, formData[current].value)
+          error: !formData[current].error ? validator(formData[current].validators.methods, formData[current].value) : formData[current].error
         }
       }), {})
 
     let allpasstest = Object.keys(validatedInputs)
       .every(input => validatedInputs[input].error === false)
 
+    let allInputsQueried = Object.keys(validatedInputs)
+          .filter(property => validatedInputs[property].query)
+          .every(property => validatedInputs[property].queryVerified === true)
+
     let allinputsMatch = matchInputs(validatedInputs)
 
-    if (!allpasstest || !allinputsMatch) {
+    if (!allpasstest || !allinputsMatch || !allInputsQueried) {
 
       this.props.dispatch({
         type: 'FORM_MULTIPLE_INPUT_CHANGE',
@@ -71,6 +77,8 @@ export default class SmartButton extends Component {
 
     console.log('rannnn after')
 
+    console.log(this.props.form.data)
+
     // let data = Object.keys(formData).reduce((acc, current) => {
 
     //   let obj = acc || {}
@@ -93,13 +101,15 @@ export default class SmartButton extends Component {
 
   onClick () {
 
+    if (this.props.form.loading) return 
+
     if (this.props.disabled === undefined) {
 
       let test = this.validateAllInputs()
 
       if (!test) return
 
-    } else if (this.props.disabled === true) {
+    } else if (this.props.disabledButton === true) {
 
       return
     }
@@ -109,10 +119,17 @@ export default class SmartButton extends Component {
 
   render () {
 
+    let buttonDisabled
+
+    if (this.props.disabled) {
+
+      buttonDisabled = this.props.disabledButton
+    }
+
     let ButtonClassNames = classNames(
       [this.props.className],
       {
-        [this.props.disabledClassName]: this.props.disabled && !this.props.form.loading
+        [this.props.disabledClassName]: buttonDisabled
       }
     )
 
@@ -121,4 +138,6 @@ export default class SmartButton extends Component {
            </div>
   }
 }
+
+export default ReduxSmartForms(SmartButton)
 

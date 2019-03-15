@@ -35,7 +35,18 @@ export function validator (validators, input) {
     },
   }
 
-  let errorType = validators.map(x => methods[x.function](input, x.error) ? false : error).find(x => x !== false)
+  let errorType = validators.map(x => {
+
+    if (typeof x.method === 'function') {
+
+      return x.method(input, x.error) ? false : x.error
+      
+    } else {
+
+      return methods[x.method](input, x.error) ? false : error 
+    }
+
+  }).find(x => x !== false)
 
   return errorType ? errorType : false
 }

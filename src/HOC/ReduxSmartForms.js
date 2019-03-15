@@ -10,7 +10,7 @@ const FilterData = function (WrappedComponent) {
 
     render() {
 
-      let form = this.props.state.ReduxSmartFormReducer || this.props.form
+      let form = this.props.form
       let formData = form.data
       let data = {}
 
@@ -39,7 +39,9 @@ const ValidateInputs = function (WrappedComponent) {
 
       if (!_.isEmpty(data)) {
 
-        allValid = Object.keys(data).every(input => data[input].error === false)
+        allValid = Object.keys(data)
+          .filter(property => !!data[property].validators)
+          .every(input => !data[input].error && data[input].error !== null)
       }
 
       return (
@@ -100,7 +102,7 @@ const EnableButton = function (WrappedComponent) {
 
     render() {
 
-      let { allValid, allQueried, allMatch, ...rest} = this.props
+      let { allValid, allQueried, allMatch, data, ...rest} = this.props
 
       let conditionArray = [
         allValid,
@@ -111,7 +113,7 @@ const EnableButton = function (WrappedComponent) {
       let condition = conditionArray.every(item => item === true)
 
       return (
-        <WrappedComponent {...rest} disabled={!condition} />
+        <WrappedComponent {...rest} disabledButton={!condition} />
       )
     }
   }
