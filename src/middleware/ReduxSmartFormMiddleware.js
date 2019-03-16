@@ -4,7 +4,7 @@ let source = undefined
 
 const ReduxSmartFormMiddleware = ({ dispatch, getState }) => next => action => {
 
-  let { type, payload, success, error, loader, stopLoader } = action
+  let { type, payload, success, error, loader, stopLoader, callbackIsFunction } = action
 
   let property = null
 
@@ -32,14 +32,22 @@ const ReduxSmartFormMiddleware = ({ dispatch, getState }) => next => action => {
     }).then(response => {
 
       dispatch(stopLoader())
-      dispatch(success(!!property ? {success: response.data, property} : response.data))
+
+      if (callbackIsFunction) {
+
+        success(response.data)
+
+      } else {
+
+        dispatch(success(!!property ? {success: response.data, property} : response.data))
+      }
 
     }).catch(err => {
 
       dispatch(stopLoader())
 
       if (!axios.isCancel(err)) {
-        
+
         dispatch(error(!!property ? {error: err.response.data, property} : err.response.data))
       }
     })

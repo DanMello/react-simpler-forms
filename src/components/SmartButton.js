@@ -90,7 +90,7 @@ class SmartButton extends Component {
       })
     }
 
-    this.props.dispatch(submitForm(data, this.props.url, this.props.callBackAction))
+    this.props.dispatch(submitForm(data, this.props.url, this.props.callBackIsFunction, this.props.callBack))
   }
 
   onClick () {

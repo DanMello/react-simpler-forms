@@ -77,7 +77,7 @@ export function query(input, value, url) {
     },
     meta: {
       cancelable: true,
-      property: 'email'
+      property: input
     },
     stopLoader: stopLoader,
     loader: loader,
@@ -131,7 +131,7 @@ export function formSuccess(response) {
   }
 }
 
-export function submitForm(data, url, callbackAction) {
+export function submitForm(data, url, callbackIsFunction, callback) {
 
   return {
     type: "FETCH",
@@ -147,6 +147,7 @@ export function submitForm(data, url, callbackAction) {
     stopLoader: stopLoader,
     loader: loader,
     error: formError,
-    success: callbackAction ? callbackAction : formSuccess
+    callbackIsFunction: callbackIsFunction,
+    success: callback ? callback : formSuccess
   }
 }

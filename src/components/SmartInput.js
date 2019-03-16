@@ -96,21 +96,25 @@ export default class SmartInput extends Component {
       })
     }
 
-    if (this.props.query && !data.error) {
+    if (this.props.query) {
 
       data.queryVerified = false
       data.queryResponse = null
-      data.typing = false
 
-      this.setState({
-        queryDelay: setTimeout(() => {
+      if (!data.error) {
 
-          let value = this.props.form.data[this.props.name].value
+        data.typing = false
 
-          this.props.dispatch(query(this.props.name, value, this.props.query.url))
+        this.setState({
+          queryDelay: setTimeout(() => {
 
-        }, 350)
-      })
+            let value = this.props.form.data[this.props.name].value
+
+            this.props.dispatch(query(this.props.name, value, this.props.query.url))
+
+          }, 350)
+        })
+      }
     }
 
     this.props.dispatch({
@@ -171,8 +175,6 @@ export default class SmartInput extends Component {
     let error, typing
 
     if (input) {
-
-      // console.log('yoo', input)
 
       value = input.value
       error = input.error
