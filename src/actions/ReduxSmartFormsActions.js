@@ -1,14 +1,14 @@
 export function loader() {
 
   return {
-    type: "FORM_LOADING"
+    type: "REDUX_SMART_FORM_LOADING"
   }
 }
 
 export function stopLoader() {
 
   return {
-    type: "FORM_STOP_LOADING"
+    type: "REDUX_SMART_FORM_STOP_LOADING"
   }
 }
 
@@ -26,7 +26,7 @@ function querySuccess(query) {
   }
 
   return {
-    type: "FORM_QUERY_RESPONSE",
+    type: "REDUX_SMART_FORM_QUERY_RESPONSE",
     payload: {
       property: query.property,
       response: message,
@@ -50,7 +50,7 @@ function queryError(query) {
   }
 
   return {
-    type: "FORM_QUERY_RESPONSE",
+    type: "REDUX_SMART_FORM_QUERY_RESPONSE",
     payload: {
       property: query.property,
       response: message,
@@ -63,7 +63,7 @@ function queryError(query) {
 export function query(input, value, url) {
 
   return {
-    type: "FETCH",
+    type: "REDUX_SMART_FORM_FETCH",
     payload: {
       method: 'POST',
       headers: {
@@ -100,7 +100,7 @@ export function formError(error) {
   }
 
   return {
-    type: "FORM_SUBMIT_RESPONSE",
+    type: "REDUX_SMART_FORM_SUBMIT_RESPONSE",
     payload: {
       error: message
     }
@@ -121,7 +121,7 @@ export function formSuccess(response) {
   }
 
   return {
-    type: "FORM_SUBMIT_RESPONSE",
+    type: "REDUX_SMART_FORM_SUBMIT_RESPONSE",
     payload: {
       response: message,
       data: {},
@@ -134,7 +134,7 @@ export function formSuccess(response) {
 export function submitForm(data, url, callbackIsFunction, callback) {
 
   return {
-    type: "FETCH",
+    type: "REDUX_SMART_FORM_FETCH",
     payload: {
       method: 'POST',
       headers: {

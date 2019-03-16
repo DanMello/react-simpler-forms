@@ -8,7 +8,7 @@ const ReduxSmartFormMiddleware = ({ dispatch, getState }) => next => action => {
 
   let property = null
 
-  if (type === 'FETCH') {
+  if (type === 'REDUX_SMART_FORM_FETCH') {
 
     if (action.meta) {
 

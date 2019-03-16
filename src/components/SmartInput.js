@@ -57,7 +57,7 @@ export default class SmartInput extends Component {
       }
 
       this.props.dispatch({
-        type: 'FORM_INPUT_CHANGE',
+        type: 'REDUX_SMART_FORM_INPUT_CHANGE',
         payload: {
           property: this.props.name,
           data
@@ -84,7 +84,7 @@ export default class SmartInput extends Component {
         typingDelay: setTimeout(() => {
 
           this.props.dispatch({
-            type: 'FORM_INPUT_CHANGE',
+            type: 'REDUX_SMART_FORM_INPUT_CHANGE',
             payload: {
               property: this.props.name,
               data: {
@@ -118,7 +118,7 @@ export default class SmartInput extends Component {
     }
 
     this.props.dispatch({
-      type: 'FORM_INPUT_CHANGE',
+      type: 'REDUX_SMART_FORM_INPUT_CHANGE',
       payload: {
         property: this.props.name,
         data
@@ -140,7 +140,7 @@ export default class SmartInput extends Component {
     }
 
     this.props.dispatch({
-      type: 'FORM_INPUT_CHANGE',
+      type: 'REDUX_SMART_FORM_INPUT_CHANGE',
       payload: {
         property: this.props.name,
         data

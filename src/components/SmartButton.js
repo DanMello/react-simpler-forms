@@ -46,7 +46,7 @@ class SmartButton extends Component {
     if (!allpasstest || !allinputsMatch || !allInputsQueried) {
 
       this.props.dispatch({
-        type: 'FORM_MULTIPLE_INPUT_CHANGE',
+        type: 'REDUX_SMART_FORM_MULTIPLE_INPUT_CHANGE',
         payload: {
           data: validatedInputs
         }
@@ -63,14 +63,14 @@ class SmartButton extends Component {
   nextStep () {
 
     this.props.dispatch({
-      type: 'FORM_INCREMENT_STEP'
+      type: 'REDUX_SMART_FORM_INCREMENT_STEP'
     })
   }
 
   prevStep () {
 
     this.props.dispatch({
-      type: 'FORM_DECREMENT_STEP'
+      type: 'REDUX_SMART_FORM_DECREMENT_STEP'
     })
   }
 
@@ -96,7 +96,7 @@ class SmartButton extends Component {
   onClick () {
 
     this.props.dispatch({
-      type: 'FORM_RESET_RESPONSES'
+      type: 'REDUX_SMART_FORM_RESET_RESPONSES'
     })
 
     if (this.props.form.loading) return 

@@ -7,10 +7,10 @@ export default function reducer(state={
 }, action) {
 
   switch (action.type) {
-    case 'FORM_LOADING': {
+    case 'REDUX_SMART_FORM_LOADING': {
       return {...state, loading: true}
     }
-    case 'FORM_INPUT_CHANGE': {
+    case 'REDUX_SMART_FORM_INPUT_CHANGE': {
       return {
         ...state,
         data: {
@@ -22,7 +22,7 @@ export default function reducer(state={
         }
       }
     }
-    case 'FORM_MULTIPLE_INPUT_CHANGE': {
+    case 'REDUX_SMART_FORM_MULTIPLE_INPUT_CHANGE': {
 
       let newData = Object.keys(action.payload.data).reduce((diff, key) => {
         if (state.data[key] === action.payload.data[key]) return diff
@@ -40,7 +40,7 @@ export default function reducer(state={
         }
       }
     }
-    case 'FORM_QUERY_RESPONSE': {
+    case 'REDUX_SMART_FORM_QUERY_RESPONSE': {
       return {
         ...state,
         data: {
@@ -54,22 +54,22 @@ export default function reducer(state={
         }
       }
     }
-    case 'FORM_INCREMENT_STEP': {
+    case 'REDUX_SMART_FORM_INCREMENT_STEP': {
       return {...state, step: state.step + 1}
     }
-    case 'FORM_DECREMENT_STEP': {
+    case 'REDUX_SMART_FORM_DECREMENT_STEP': {
       return {...state, step: state.step - 1}
     }
-    case 'FORM_SUBMIT_RESPONSE': {
+    case 'REDUX_SMART_FORM_SUBMIT_RESPONSE': {
       return {...state, ...action.payload}
     }
-    case 'FORM_RESET_RESPONSES': {
+    case 'REDUX_SMART_FORM_RESET_RESPONSES': {
       return {...state, error: false, response: null}
     }
-    case 'FORM_STOP_LOADING': {
+    case 'REDUX_SMART_FORM_STOP_LOADING': {
       return {...state, loading: false}
     }
-    case 'FORM_RESET_FIELDS': {
+    case 'REDUX_SMART_FORM_RESET_FIELDS': {
       return {
         ...state,
         data: Object.keys(state.data)
@@ -77,7 +77,7 @@ export default function reducer(state={
           .reduce((acc, current) => ({...acc, [current]: state.data[current] }), {})
       }
     }
-    case 'FORM_RESET': {
+    case 'REDUX_SMART_FORM_RESET': {
       return { step: 0, data: {}, loading: false, error: false, response: null}
     }
     default :
