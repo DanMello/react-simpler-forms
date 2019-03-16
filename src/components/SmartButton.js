@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { validator } from '../helpers/validators';
 import matchInputs from '../helpers/matchInputs'
+import { submitForm } from '../actions/ReduxSmartFormsActions'
 import classNames from 'classnames'
 import ReduxSmartForms from '../HOC/ReduxSmartForms' 
 
@@ -75,43 +76,43 @@ class SmartButton extends Component {
 
   submit () {
 
-    console.log('rannnn after')
+    let formData = this.props.form.data
 
-    console.log(this.props.form.data)
+    let data = Object.keys(formData)
+      .filter(property => formData[property].value !== '')
+      .reduce((acc, current) => ({...acc, [current] : formData[current].value }), {})
 
-    // let data = Object.keys(formData).reduce((acc, current) => {
+    if (this.props.extraData) {
 
-    //   let obj = acc || {}
+      this.props.extraData.forEach(item => {
 
-    //   obj[current] = this.props.form.data[current].value
+        data[item.property] = item.value
+      })
+    }
 
-    //   return obj
-
-    // }, {})
-
-    // if (this.props.form.tokenObj) {
-
-    //   data.token = this.props.form.tokenObj.token
-    //   data.property = this.props.form.tokenObj.property
-    //   data.heading = this.props.form.tokenObj.heading
-    // }
-
-    // this.props.dispatch(this.props.onSubmit(data))
+    this.props.dispatch(submitForm(data, this.props.url, this.props.callBackAction))
   }
 
   onClick () {
 
+    this.props.dispatch({
+      type: 'FORM_RESET_RESPONSES'
+    })
+
     if (this.props.form.loading) return 
 
-    if (this.props.disabled === undefined) {
+    if (this.props.type !== 'prevStep') {
 
-      let test = this.validateAllInputs()
+      if (this.props.disabled === undefined) {
 
-      if (!test) return
+        let test = this.validateAllInputs()
 
-    } else if (this.props.disabledButton === true) {
+        if (!test) return
 
-      return
+      } else if (this.props.disabledButton === true) {
+
+        return
+      }
     }
 
     return this[this.props.type]()
@@ -140,4 +141,3 @@ class SmartButton extends Component {
 }
 
 export default ReduxSmartForms(SmartButton)
-

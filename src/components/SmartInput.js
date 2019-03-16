@@ -23,44 +23,47 @@ export default class SmartInput extends Component {
 
   componentDidMount() {
 
-    let data = {
-      value: '',
-      step: this.props.form.step,
-      error: null
-    }
+    if (!this.props.form.data[this.props.name]) {
 
-    if (this.props.type === 'radio' || this.props.type === 'select') {
-
-      if (this.props.required) {
-
-        data.required = true
-        data.validators = [ {method: "notEmpty", error: true} ]
+      let data = {
+        value: '',
+        step: this.props.form.step,
+        error: null
       }
 
-    } else {
+      if (this.props.type === 'radio' || this.props.type === 'select') {
 
-      data.validators = this.props.validators
-    }
+        if (this.props.required) {
 
-    if (this.props.query) {
+          data.required = true
+          data.validators = [ {method: "notEmpty", error: true} ]
+        }
 
-      data.query = true
-      data.queryVerified = false
-      data.queryResponse = null
-    }
+      } else {
 
-    if (this.props.match) {
-
-      data.match = this.props.match
-    }
-
-    this.props.dispatch({
-      type: 'FORM_INPUT_CHANGE',
-      payload: {
-        property: this.props.name,
-        data
+        data.validators = this.props.validators
       }
-    })
+
+      if (this.props.query) {
+
+        data.query = true
+        data.queryVerified = false
+        data.queryResponse = null
+      }
+
+      if (this.props.match) {
+
+        data.match = this.props.match
+      }
+
+      this.props.dispatch({
+        type: 'FORM_INPUT_CHANGE',
+        payload: {
+          property: this.props.name,
+          data
+        }
+      })
+    }
   }
 
   onChangeInput (e) {
@@ -169,6 +172,8 @@ export default class SmartInput extends Component {
 
     if (input) {
 
+      // console.log('yoo', input)
+
       value = input.value
       error = input.error
       typing = input.typing
@@ -186,13 +191,13 @@ export default class SmartInput extends Component {
 
     if (this.props.type === 'textarea') {
 
-      inputType = ( 
-        <textarea 
-          {...rest} 
-          className={formInputsClasses} 
-          onChange={this.onChangeInput} 
+      inputType = (
+        <textarea
+          {...rest}
+          className={formInputsClasses}
+          onChange={this.onChangeInput}
           onBlur={this.onBlur} 
-          onFocus={this.onFocus} 
+          onFocus={this.onFocus}
           value={value}
         />
       )
@@ -220,7 +225,7 @@ export default class SmartInput extends Component {
         <input 
           {...rest}
           name={name}
-          className={formInputsClasses} 
+          className={formInputsClasses}
           onChange={this.props.type !== 'radio' ? this.onChangeInput : this.onChangeSelection}
           value={value} 
           onBlur={this.onBlur} 

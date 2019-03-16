@@ -3,8 +3,7 @@ export default function reducer(state={
   data: {},
   loading: false,
   error: false,
-  response: null,
-  tokenObj: {}
+  response: null
 }, action) {
 
   switch (action.type) {
@@ -44,7 +43,6 @@ export default function reducer(state={
     case 'FORM_QUERY_RESPONSE': {
       return {
         ...state,
-        loading: false,
         data: {
           ...state.data,
           [action.payload.property] : {
@@ -62,49 +60,25 @@ export default function reducer(state={
     case 'FORM_DECREMENT_STEP': {
       return {...state, step: state.step - 1}
     }
-    case 'FORM_RESET_FIELDS': {  
+    case 'FORM_SUBMIT_RESPONSE': {
+      return {...state, ...action.payload}
+    }
+    case 'FORM_RESET_RESPONSES': {
+      return {...state, error: false, response: null}
+    }
+    case 'FORM_STOP_LOADING': {
+      return {...state, loading: false}
+    }
+    case 'FORM_RESET_FIELDS': {
       return {
-        ...state, 
+        ...state,
         data: Object.keys(state.data)
           .filter(x => !action.payload.includes(x))
           .reduce((acc, current) => ({...acc, [current]: state.data[current] }), {})
       }
     }
     case 'FORM_RESET': {
-      return { step: 0, data: {}, loading: false, error: false, typingDelays: {}, queryInputs: {}, response: null, tokenObj: {}}
-    }
-    case 'FORM_SUBMIT_ERROR': {
-      return {...state, error: action.payload, loading: false}
-    }
-    case 'FORM_MESSAGE_SENT': {
-      return {
-        ...state,
-        loading: false,
-        response: action.payload,
-        data: {}
-      }
-    }
-    case 'FORM_ADD_TOKEN': {
-      return {
-        ...state,
-        tokenObj: action.payload
-      }
-    }
-    case 'FORM_PROPERTY_ERROR': {
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [action.payload.property] : {
-            ...state.data[action.payload.property],
-            errorMessage: action.payload.error
-          }
-        },
-        loading: false
-      }
-    }
-    case 'FORM_SET_STEP': {
-      return {...state, step: action.payload}
+      return { step: 0, data: {}, loading: false, error: false, response: null}
     }
     default :
       return state

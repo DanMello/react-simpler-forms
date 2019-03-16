@@ -4,7 +4,7 @@ let source = undefined
 
 const ReduxSmartFormMiddleware = ({ dispatch, getState }) => next => action => {
 
-  let { type, payload, success, error, loader, redirect, redirectUrl } = action
+  let { type, payload, success, error, loader, stopLoader } = action
 
   let property = null
 
@@ -24,31 +24,22 @@ const ReduxSmartFormMiddleware = ({ dispatch, getState }) => next => action => {
 
     source = CancelToken.source()
 
-    dispatch(action.loader())
+    dispatch(loader())
 
     axios({
       ...payload,
       ...{ cancelToken: source.token }
     }).then(response => {
 
-      if (redirect) {
-
-        // window redirect url
-
-        // return history.push({
-        //   pathname: redirectUrl,
-        //   state: {
-        //     redirectMessage: response.data
-        //   }
-        // })
-      }
-
+      dispatch(stopLoader())
       dispatch(success(!!property ? {success: response.data, property} : response.data))
 
     }).catch(err => {
 
-      if (!axios.isCancel(err)) {
+      dispatch(stopLoader())
 
+      if (!axios.isCancel(err)) {
+        
         dispatch(error(!!property ? {error: err.response.data, property} : err.response.data))
       }
     })
