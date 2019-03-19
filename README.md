@@ -39,13 +39,14 @@ class App extends Component {
       form: this.props.form, //form state
       updateform: this.props.updateform //method for updating form state
     };
-    // disabled is also exposed by HOC and is a bool that you can use to disable the submit button.
+    /* disabled is also exposed by HOC and is a bool 
+    that you can use to disable the submit button. */
     let disabled = this.props.disabled;
 
     return (
 
-      // formProps.form.response will contain a response 
-      // if you don't pass a success callback to the Button component.
+      /* formProps.form.response will contain a response 
+       if you don't pass a success callback to the Button component. */
       <div className='formSubmitSuccess'>{formProps.form.response}</div> 
       //If you get an error from the server that will be here.
       <div className='formSubmitError'>{formProps.form.error}</div>
@@ -59,7 +60,11 @@ class App extends Component {
 ```js
     <div className='input-container'>
 
-      <Response {...formProps} for={'first_name'} errorClassName='input-response-error' />
+      <Response 
+        {...formProps}
+        for={'first_name'} 
+        errorClassName='input-response-error' 
+      />
 
       <label className='label'>First Name:</label>
 
@@ -70,9 +75,18 @@ class App extends Component {
         focusedClassName='input-focused'
         errorClassName='input-error'
         validators={[
-          {method: "notEmpty", error: "First name cannot be empty."},
-          {method: "onlyLetters", error: "First name can only contain letters."},
-          {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
+          {
+            method: "notEmpty", 
+            error: "First name cannot be empty."
+          },
+          {
+            method: "onlyLetters", 
+            error: "First name can only contain letters."
+          },
+          {
+            method: "maxCharaters",
+            error: "First name cannot be longer than 35 characters."
+          }
         ]}
       />
 
@@ -97,7 +111,8 @@ class App extends Component {
 
       <label className='label'>Email:</label>
 
-      // Query sends JSON post request after user stops typing and input has been validated.
+      /* Query sends JSON post request after user 
+      stops typing and input has been validated. */
       <Input
         {...formProps}
         name='email'
@@ -108,8 +123,14 @@ class App extends Component {
         delayError={1400}
         type='email'
         validators={[
-          {method: "notEmpty", error: "Email name cannot be empty."},
-          {method: "validEmail", error: "Please enter a valid email."}
+          {
+            method: "notEmpty",
+            error: "Email name cannot be empty."
+          },
+          {
+            method: "validEmail",
+            error: "Please enter a valid email."
+          }
         ]}
       />
 
@@ -146,8 +167,14 @@ class App extends Component {
         delayError={1400}
         match='password'
         validators={[
-          {method: "notEmpty", error: "Password name cannot be empty."},
-          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+          {
+            method: "notEmpty", 
+            error: "Password name cannot be empty."
+          },
+          {
+            method: "validPassword",
+            error: "Password must contain at least 8 character and 1 number."
+          }
         ]}
         type='password'
       />
@@ -173,8 +200,14 @@ class App extends Component {
         delayError={1400}
         match='password'
         validators={[
-          {method: "notEmpty", error: "Password name cannot be empty."},
-          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+          {
+            method: "notEmpty",
+            error: "Password name cannot be empty."
+          },
+          {
+            method: "validPassword",
+            error: "Password must contain at least 8 character and 1 number."
+          }
         ]}
         type='password'
       />
@@ -201,17 +234,32 @@ class App extends Component {
       />
 
       <div className='radio-container'>
-        <Input {...formProps} name='favorite_color' value='red' type='radio' required/>
+        <Input 
+          {...formProps} 
+          required
+          name='favorite_color' 
+          value='red' type='radio' 
+        />
         <label className='label'>Red</label>
       </div>
 
       <div className='radio-container'>
-        <Input {...formProps} name='favorite_color' value='green' type='radio'/>
+        <Input 
+          {...formProps} 
+          name='favorite_color' 
+          value='green' 
+          type='radio'
+        />
         <label className='label'>Green</label>
       </div>
 
       <div className='radio-container'>
-        <Input {...formProps} name='favorite_color' value='blue' type='radio'/>
+        <Input 
+          {...formProps} 
+          name='favorite_color' 
+          value='blue' 
+          type='radio'
+        />
         <label className='label'>Blue</label>
       </div>
 
@@ -258,14 +306,22 @@ class App extends Component {
 </details>
 
 ```js
-    // Submit sends a json post request to your url with all the data from the form.
+    / * 
+
+    Submit sends a json post request to your url 
+    with all the data from the form. 
+
+    success={this.submit} is a function you can pass to 
+    handle the response from your server
+
+     */
     <Button
       {...formProps}
       disabled={disabled}
       className='button'
       disabledClassName='button-disabled'
       url='http://yourwebsite.com/signup'
-      success={this.submit} // Success is a function you can pass to handle the response
+      success={this.submit}
       type='submit'
       >
       Submit
@@ -288,7 +344,7 @@ class Step1 extends Component {
   render() {
 
     let {disabled, ...rest} = this.props.formProps
-    
+
     return (
       <div>
 ```
@@ -300,7 +356,11 @@ class Step1 extends Component {
 ```js
     <div className='input-container'>
 
-      <Response {...rest} for={'first_name'} errorClassName='input-response-error' />
+      <Response 
+        {...rest} 
+        for={'first_name'} 
+        errorClassName='input-response-error' 
+      />
 
       <label className='label'>First Name:</label>
 
@@ -311,9 +371,18 @@ class Step1 extends Component {
         focusedClassName='input-focused'
         errorClassName='input-error'
         validators={[
-          {method: "notEmpty", error: "First name cannot be empty."},
-          {method: "onlyLetters", error: "First name can only contain letters."},
-          {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
+          {
+            method: "notEmpty",
+            error: "First name cannot be empty."
+          },
+          {
+            method: "onlyLetters",
+            error: "First name can only contain letters."
+          },
+          {
+            method: "maxCharaters",
+            error: "First name cannot be longer than 35 characters."
+          }
         ]}
       />
 
@@ -321,7 +390,11 @@ class Step1 extends Component {
 
     <div className='input-container'>
 
-      <Response {...rest} for={'last_name'} errorClassName='input-response-error' />
+      <Response 
+        {...rest}
+        for={'last_name'}
+        errorClassName='input-response-error' 
+      />
 
       <label className='label'>Last Name:</label>
 
@@ -332,9 +405,18 @@ class Step1 extends Component {
         focusedClassName='input-focused'
         errorClassName='input-error'
         validators={[
-          {method: "notEmpty", error: "Last name cannot be empty."},
-          {method: "onlyLetters", error: "Last name can only contain letters."},
-          {method: "maxCharaters", error: "Last name cannot be longer than 35 characters."}
+          {
+            method: "notEmpty",
+            error: "Last name cannot be empty."
+          },
+          {
+            method: "onlyLetters",
+            error: "Last name can only contain letters."
+          },
+          {
+            method: "maxCharaters", 
+            error: "Last name cannot be longer than 35 characters."
+          }
         ]}
       />
 
@@ -396,8 +478,14 @@ class Step2 extends Component {
         delayError={1400}
         type='email'
         validators={[
-          {method: "notEmpty", error: "Email name cannot be empty."},
-          {method: "validEmail", error: "Please enter a valid email."}
+          {
+            method: "notEmpty", 
+            error: "Email name cannot be empty."
+          },
+          {
+            method: "validEmail",
+            error: "Please enter a valid email."
+          }
         ]}
       />
 
@@ -481,8 +569,14 @@ class Step3 extends Component {
         delayError={1400}
         match='password'
         validators={[
-          {method: "notEmpty", error: "Password name cannot be empty."},
-          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+          {
+            method: "notEmpty", 
+            error: "Password name cannot be empty."
+          },
+          {
+            method: "validPassword", 
+            error: "Password must contain at least 8 character and 1 number."
+          }
         ]}
         type='password'
       />
@@ -508,8 +602,14 @@ class Step3 extends Component {
         delayError={1400}
         match='password'
         validators={[
-          {method: "notEmpty", error: "Password name cannot be empty."},
-          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+          {
+            method: "notEmpty", 
+            error: "Password name cannot be empty."
+          },
+          {
+            method: "validPassword", 
+            error: "Password must contain at least 8 character and 1 number."
+          }
         ]}
         type='password'
       />
