@@ -1,13 +1,11 @@
-import SmartInput from './components/SmartInput'
-import SmartButton from './components/SmartButton'
-import SmartResponse from './components/SmartResponse'
-import ReduxSmartFormReducer from './reducers/ReduxSmartFormReducer'
-import ReduxSmartFormMiddleware from './middleware/ReduxSmartFormMiddleware'
+import SimplerForm from './HOC/SimplerForm'
+import Input from './components/Input'
+import Button from './components/Button'
+import Response from './components/Response'
 
 export {
-  SmartInput,
-  SmartButton,
-  SmartResponse,
-  ReduxSmartFormReducer,
-  ReduxSmartFormMiddleware
+  SimplerForm,
+  Input,
+  Response,
+  Button
 }

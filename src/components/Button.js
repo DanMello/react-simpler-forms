@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-import { validator } from '../helpers/validators';
-import matchInputs from '../helpers/matchInputs'
-import { submitForm } from '../actions/ReduxSmartFormsActions'
-import classNames from 'classnames'
-import ReduxSmartForms from '../HOC/ReduxSmartForms' 
+import React, { Component } from 'react'
+import { validator, allmatch } from '../helpers/validators'
 
-class SmartButton extends Component {
+export default class Button extends Component {
 
   constructor () {
 
@@ -18,12 +14,26 @@ class SmartButton extends Component {
     this.validateAllInputs = this.validateAllInputs.bind(this)
   }
 
+  componentDidMount() {
+    
+    if (typeof this.props.type !== 'string') {
+
+      console.error(
+        "Button prop 'type' is required and must be a string.\n",
+        "Valid Strings: \n",
+        " type='prevStep'\n",
+        " type='nextStep'\n",
+        " type='submit'\n"
+      );
+    }
+  }
+
   validateAllInputs() {
 
     let formData = this.props.form.data
     let step = this.props.form.step
 
-    let validatedInputs = Object.keys(formData)
+    let payload = Object.keys(formData)
       .filter(property => formData[property].step === step)
       .filter(property => !!formData[property].validators)
       .reduce((acc, current) => ({
@@ -34,23 +44,18 @@ class SmartButton extends Component {
         }
       }), {})
 
-    let allpasstest = Object.keys(validatedInputs)
-      .every(input => validatedInputs[input].error === false)
+    let allpasstest = Object.keys(payload)
+      .every(input => payload[input].error === false)
 
-    let allInputsQueried = Object.keys(validatedInputs)
-          .filter(property => validatedInputs[property].query)
-          .every(property => validatedInputs[property].queryVerified === true)
+    let allInputsQueried = Object.keys(payload)
+          .filter(property => payload[property].query)
+          .every(property => payload[property].queryVerified === true)
 
-    let allinputsMatch = matchInputs(validatedInputs)
+    let allinputsMatch = allmatch(payload)
 
     if (!allpasstest || !allinputsMatch || !allInputsQueried) {
 
-      this.props.dispatch({
-        type: 'REDUX_SMART_FORM_MULTIPLE_INPUT_CHANGE',
-        payload: {
-          data: validatedInputs
-        }
-      })
+      this.props.updateform('updateMultiple', payload)
 
       return false
 
@@ -62,16 +67,12 @@ class SmartButton extends Component {
 
   nextStep () {
 
-    this.props.dispatch({
-      type: 'REDUX_SMART_FORM_INCREMENT_STEP'
-    })
+    this.props.updateform('incrementStep')
   }
 
   prevStep () {
 
-    this.props.dispatch({
-      type: 'REDUX_SMART_FORM_DECREMENT_STEP'
-    })
+    this.props.updateform('decrementStep')
   }
 
   submit () {
@@ -90,14 +91,27 @@ class SmartButton extends Component {
       })
     }
 
-    this.props.dispatch(submitForm(data, this.props.url, this.props.callBackIsFunction, this.props.callBack))
+    let payload = {
+      data: data,
+      url: this.props.url,
+      error: 'submitError'
+    }
+
+    if (this.props.success) {
+
+      payload.success = this.props.success
+
+    } else {
+
+      payload.success = 'submitSuccess'
+    }
+
+    this.props.updateform('submitForm', payload)
   }
 
   onClick () {
 
-    this.props.dispatch({
-      type: 'REDUX_SMART_FORM_RESET_RESPONSES'
-    })
+    this.props.updateform('resetFormResponses')
 
     if (this.props.form.loading) return 
 
@@ -109,7 +123,7 @@ class SmartButton extends Component {
 
         if (!test) return
 
-      } else if (this.props.disabledButton === true) {
+      } else if (this.props.disabled === true) {
 
         return
       }
@@ -120,24 +134,13 @@ class SmartButton extends Component {
 
   render () {
 
-    let buttonDisabled
+    let className = this.props.disabled ? 
+      [this.props.className, this.props.disabledClassName]
+      :
+      [this.props.className]
 
-    if (this.props.disabled) {
-
-      buttonDisabled = this.props.disabledButton
-    }
-
-    let ButtonClassNames = classNames(
-      [this.props.className],
-      {
-        [this.props.disabledClassName]: buttonDisabled
-      }
-    )
-
-    return <div onClick={this.onClick} className={ButtonClassNames}>
+    return <div onClick={this.onClick} className={className.join(' ')}>
             {this.props.children}
            </div>
   }
 }
-
-export default ReduxSmartForms(SmartButton)

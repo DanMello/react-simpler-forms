@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 
-export default class SmartResponse extends Component {
+export default class Response extends Component {
+
+  componentDidMount() {
+    
+    if (typeof this.props.for !== 'string') {
+
+      console.error(
+        "Response prop 'for' is required and must be a string.\n",
+        "Example: for='first_name'"
+      );
+    }
+  }
 
   render () {
 

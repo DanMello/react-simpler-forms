@@ -1,4 +1,4 @@
-export function validator (validators, input) {
+function validator (validators, input) {
 
   let error = ''
 
@@ -40,7 +40,7 @@ export function validator (validators, input) {
     if (typeof x.method === 'function') {
 
       return x.method(input, x.error) ? false : x.error
-      
+
     } else {
 
       return methods[x.method](input, x.error) ? false : error 
@@ -49,4 +49,55 @@ export function validator (validators, input) {
   }).find(x => x !== false)
 
   return errorType ? errorType : false
+}
+
+function allmatch (data) {
+
+  let matchingGroups = Object.keys(data)
+    .filter(input => data[input].match)
+    .reduce((result, item) => ({
+      ...result,
+      [data[item].match]: [
+        ...(result[data[item].match] || []),
+        data[item]
+      ]
+    }), {})
+
+  return Object.keys(matchingGroups)
+    .map(a => matchingGroups[a].every(b => matchingGroups[a][0].value === b.value))
+    .every(item => !!item)
+}
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+function isJson(item) {
+
+    item = typeof item !== "string"
+        ? JSON.stringify(item)
+        : item;
+
+    try {
+        item = JSON.parse(item);
+    } catch (e) {
+        return false;
+    }
+
+    if (typeof item === "object" && item !== null) {
+        return true;
+    }
+
+    return false;
+}
+
+export {
+  allmatch,
+  isEmpty,
+  validator,
+  isJson
 }

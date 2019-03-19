@@ -1,21 +1,19 @@
 {
-  "name": "redux-smart-forms",
+  "name": "react-simpler-forms",
   "version": "1.0.0",
   "description": "React components that make it easy to create, validate, query, and submit single or multi-step forms. ",
   "main": "dist/main.bundle.js",
   "peerDependencies": {
-    "axios": "^0.18.0",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-redux": "^6.0.1",
-    "redux": "^4.0.1"
+    "react-dom": "^16.5.2"
   },
   "keywords": [
-    "redux-smart-forms",
-    "redux-smart-form",
-    "redux-form",
-    "react-form",
-    "form"
+    "react-simpler-forms",
+    "multi-step-forms",
+    "react",
+    "react-form-validator",
+    "form",
+    "validator"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,14 +37,8 @@
     "babel-loader": "^8.0.5",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-redux": "^6.0.1",
-    "redux": "^4.0.1",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
-  },
-  "dependencies": {
-    "classnames": "^2.2.6",
-    "lodash": "^4.17.11"
   }
 }
