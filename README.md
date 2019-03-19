@@ -237,6 +237,18 @@ class App extends Component {
 </details>
 
 ```js
+    // Submit sends a json post request to your url with all the data from the form.
+    <Button
+      {...formProps}
+      disabled={disabled}
+      className='button'
+      disabledClassName='button-disabled'
+      url='http://yourwebsite.com/signup'
+      success={this.submit} // Success is a function you can pass to handle the response
+      type={'submit'}
+      >
+      Submit
+    </Button>
     )
   };
 };
