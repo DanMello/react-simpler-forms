@@ -1,5 +1,5 @@
 # react-simpler-forms
-React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, search query, and submit single or multi-step forms.
+React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, perform search queries, and submit single or multi-step forms.
 
 * Zero dependencies.
 
@@ -36,18 +36,18 @@ class App extends Component {
   <p>
   
 ```js
-    <div className='input-Container'>
+    <div className='input-container'>
 
-      <Response {...formProps} for={'first_name'} errorClassName={'input-response-error'} />
+      <Response {...formProps} for={'first_name'} errorClassName='input-response-error' />
 
       <label className='label'>First Name:</label>
 
       <Input
         {...formProps}
-        name={'first_name'}
-        className={'input'}
-        focusedClassName={'input-focused'}
-        errorClassName={'input-error'}
+        name='first_name'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
         validators={[
           {method: "notEmpty", error: "First name cannot be empty."},
           {method: "onlyLetters", error: "First name can only contain letters."},
@@ -65,7 +65,7 @@ class App extends Component {
   <p>
   
 ```js
-    <div className='Input-Container'>
+    <div className='input-container'>
 
       <Response 
         {...formProps} 
@@ -90,6 +90,72 @@ class App extends Component {
           {method: "notEmpty", error: "Email name cannot be empty."},
           {method: "validEmail", error: "Please enter a valid email."}
         ]}
+      />
+
+    </div>
+```
+</p>
+</details>
+
+<details>
+  <summary>Click to view Inputs that are required to match.</summary>
+  <p>
+  
+```js
+    <div className='input-container'>
+
+      <Response
+        {...formProps}
+        for='Password'
+        errorClassName='input-response-error'
+        matchError={{
+          matchName: 'password',
+          error: 'Password do not match.'
+        }}
+      />
+
+      <label className='label'>Password:</label>
+
+      <Input
+        {...formProps}
+        name='Password'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName=input-error'
+        delayError={1400}
+        match='password'
+        validators={[
+          {method: "notEmpty", error: "Password name cannot be empty."},
+          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+        ]}
+        type='password'
+      />
+
+    </div>
+
+    <div className='input-container'>
+
+      <Response 
+        {...formProps}
+        for='PasswordRepeat'
+        errorClassName='input-response-error'
+      />
+
+      <label className='label'>Password Repeat:</label>
+
+      <Input
+        {...formProps}
+        name='PasswordRepeat'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        delayError={1400}
+        match='password'
+        validators={[
+          {method: "notEmpty", error: "Password name cannot be empty."},
+          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+        ]}
+        type='password'
       />
 
     </div>
