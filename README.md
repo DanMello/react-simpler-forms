@@ -121,7 +121,7 @@ class App extends Component {
         name='Password'
         className='input'
         focusedClassName='input-focused'
-        errorClassName=input-error'
+        errorClassName='input-error'
         delayError={1400}
         match='password'
         validators={[
