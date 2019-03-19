@@ -206,7 +206,12 @@ class App extends Component {
 ```js
    <div className='select-container'>
   
-    <Response {...formProps} for='state' errorClassName='input-response-error' selectError='Please select a state.'/>
+    <Response 
+      {...formProps} 
+      for='state' 
+      errorClassName='input-response-error' 
+      selectError='Please select a state.'
+    />
 
     <label className='App-Label'>Select State:</label>
 
