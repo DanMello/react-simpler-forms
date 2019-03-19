@@ -23,10 +23,11 @@ class App extends Component {
 
     //props exposed by higher order component
     let formProps = {
-      form: this.props.form,
-      updateform: this.props.updateform,
-      disabled: this.props.disabled
+      form: this.props.form, //form state
+      updateform: this.props.updateform //method for updating form state
     };
+    // disabled is also exposed by HOC and is a bool that you can use to disable the submit.
+    let disabled = this.props.disabled;
 
     return (
       <div>
