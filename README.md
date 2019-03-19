@@ -288,6 +288,8 @@ class Step1 extends Component {
   render() {
 
     let {disabled, ...rest} = this.props.formProps
+    return (
+      <div>
 ```
 
 <details>
@@ -295,48 +297,47 @@ class Step1 extends Component {
   <p>
 
 ```js
-    <div>
-      <div className='input-container'>
+    <div className='input-container'>
 
-        <Response {...rest} for={'first_name'} errorClassName='input-response-error' />
+      <Response {...rest} for={'first_name'} errorClassName='input-response-error' />
 
-        <label className='label'>First Name:</label>
+      <label className='label'>First Name:</label>
 
-        <Input
-          {...rest}
-          name='first_name'
-          className='input'
-          focusedClassName='input-focused'
-          errorClassName='input-error'
-          validators={[
-            {method: "notEmpty", error: "First name cannot be empty."},
-            {method: "onlyLetters", error: "First name can only contain letters."},
-            {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
-          ]}
-        />
+      <Input
+        {...rest}
+        name='first_name'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        validators={[
+          {method: "notEmpty", error: "First name cannot be empty."},
+          {method: "onlyLetters", error: "First name can only contain letters."},
+          {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
+        ]}
+      />
 
-      </div>
+    </div>
 
-      <div className='input-container'>
+    <div className='input-container'>
 
-        <Response {...rest} for={'last_name'} errorClassName='input-response-error' />
+      <Response {...rest} for={'last_name'} errorClassName='input-response-error' />
 
-        <label className='label'>Last Name:</label>
+      <label className='label'>Last Name:</label>
 
-        <Input
-          {...rest}
-          name='last_name'
-          className='input'
-          focusedClassName='input-focused'
-          errorClassName='input-error'
-          validators={[
-            {method: "notEmpty", error: "Last name cannot be empty."},
-            {method: "onlyLetters", error: "Last name can only contain letters."},
-            {method: "maxCharaters", error: "Last name cannot be longer than 35 characters."}
-          ]}
-        />
+      <Input
+        {...rest}
+        name='last_name'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        validators={[
+          {method: "notEmpty", error: "Last name cannot be empty."},
+          {method: "onlyLetters", error: "Last name can only contain letters."},
+          {method: "maxCharaters", error: "Last name cannot be longer than 35 characters."}
+        ]}
+      />
 
-      </div>
+    </div>
 ```
 
 </p>
@@ -354,6 +355,7 @@ class Step1 extends Component {
         Next
       </Button>
     </div>
+    );
   };
 };
 
@@ -362,6 +364,8 @@ class Step2 extends Component {
   render() {
 
     let {disabled, ...rest} = this.props.formProps
+    return (
+      <div>
 ```
 
 <details>
@@ -369,34 +373,33 @@ class Step2 extends Component {
   <p>
 
 ```js
-    <div>
-      <div className='input-container'>
+    <div className='input-container'>
 
-        <Response 
-          {...rest} 
-          for='email' 
-          errorClassName='input-response-error' 
-          successClassName='input-response-success'
-        />
+      <Response 
+        {...rest} 
+        for='email' 
+        errorClassName='input-response-error' 
+        successClassName='input-response-success'
+      />
 
-        <label className='label'>Email:</label>
+      <label className='label'>Email:</label>
 
-        <Input
-          {...rest}
-          name='email'
-          className='input'
-          focusedClassName='input-focused'
-          errorClassName='input-error'
-          query='http://yourwebsite.com/account/checkemail'
-          delayError={1400}
-          type='email'
-          validators={[
-            {method: "notEmpty", error: "Email name cannot be empty."},
-            {method: "validEmail", error: "Please enter a valid email."}
-          ]}
-        />
+      <Input
+        {...rest}
+        name='email'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        query='http://yourwebsite.com/account/checkemail'
+        delayError={1400}
+        type='email'
+        validators={[
+          {method: "notEmpty", error: "Email name cannot be empty."},
+          {method: "validEmail", error: "Please enter a valid email."}
+        ]}
+      />
 
-      </div>
+    </div>
 ```
 
 </p>
@@ -422,6 +425,7 @@ class Step2 extends Component {
         previous
       </Button>
     </div>
+    );
   };
 };
 
@@ -442,6 +446,9 @@ class Step3 extends Component {
   render() {
 
     let {disabled, ...rest} = this.props.formProps
+
+    return (
+      <div>
 ```
 
 <details>
@@ -449,64 +456,63 @@ class Step3 extends Component {
   <p>
 
 ```js
-    <div>
-      <div className='input-container'>
+    <div className='input-container'>
 
-        <Response
-          {...formProps}
-          for='Password'
-          errorClassName='input-response-error'
-          matchError={{
-            matchName: 'password',
-            error: 'Password do not match.'
-          }}
-        />
+      <Response
+        {...formProps}
+        for='Password'
+        errorClassName='input-response-error'
+        matchError={{
+          matchName: 'password',
+          error: 'Password do not match.'
+        }}
+      />
 
-        <label className='label'>Password:</label>
+      <label className='label'>Password:</label>
 
-        <Input
-          {...formProps}
-          name='Password'
-          className='input'
-          focusedClassName='input-focused'
-          errorClassName='input-error'
-          delayError={1400}
-          match='password'
-          validators={[
-            {method: "notEmpty", error: "Password name cannot be empty."},
-            {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
-          ]}
-          type='password'
-        />
+      <Input
+        {...formProps}
+        name='Password'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        delayError={1400}
+        match='password'
+        validators={[
+          {method: "notEmpty", error: "Password name cannot be empty."},
+          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+        ]}
+        type='password'
+      />
 
-      </div>
+    </div>
 
-      <div className='input-container'>
+    <div className='input-container'>
 
-        <Response 
-          {...formProps}
-          for='PasswordRepeat'
-          errorClassName='input-response-error'
-        />
+      <Response 
+        {...formProps}
+        for='PasswordRepeat'
+        errorClassName='input-response-error'
+      />
 
-        <label className='label'>Password Repeat:</label>
+      <label className='label'>Password Repeat:</label>
 
-        <Input
-          {...formProps}
-          name='PasswordRepeat'
-          className='input'
-          focusedClassName='input-focused'
-          errorClassName='input-error'
-          delayError={1400}
-          match='password'
-          validators={[
-            {method: "notEmpty", error: "Password name cannot be empty."},
-            {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
-          ]}
-          type='password'
-        />
+      <Input
+        {...formProps}
+        name='PasswordRepeat'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        delayError={1400}
+        match='password'
+        validators={[
+          {method: "notEmpty", error: "Password name cannot be empty."},
+          {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+        ]}
+        type='password'
+      />
 
-      </div>
+    </div>
 ```
 
 </p>
@@ -534,6 +540,7 @@ class Step3 extends Component {
         previous
       </Button>
     </div>
+    );
   };
 };
 
