@@ -306,14 +306,12 @@ class App extends Component {
 </details>
 
 ```js
-    / * 
-
+    /* 
     Submit sends a json post request to your url 
     with all the data from the form. 
 
     success={this.submit} is a function you can pass to 
     handle the response from your server
-
      */
     <Button
       {...formProps}
