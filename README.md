@@ -47,8 +47,9 @@ class App extends Component {
       // formProps.form.response will contain a response 
       // if you don't pass a success callback to the Button component.
       <div className='formSubmitSuccess'>{formProps.form.response}</div> 
+      //If you get an error from the server that will be here.
       <div className='formSubmitError'>{formProps.form.error}</div>
-
+      //When form is loading you can render some sort of loader.
       {formProps.form.loading && 'Loading...'}
 ```
 <details>
@@ -351,6 +352,186 @@ class Step1 extends Component {
         type='nextStep'
         >
         Next
+      </Button>
+    </div>
+  };
+};
+
+class Step2 extends Component {
+  
+  render() {
+
+    let {disabled, ...rest} = this.props.formProps
+```
+
+<details>
+  <summary>Click to view Input.</summary>
+  <p>
+
+```js
+    <div>
+      <div className='input-container'>
+
+        <Response 
+          {...rest} 
+          for='email' 
+          errorClassName='input-response-error' 
+          successClassName='input-response-success'
+        />
+
+        <label className='label'>Email:</label>
+
+        <Input
+          {...rest}
+          name='email'
+          className='input'
+          focusedClassName='input-focused'
+          errorClassName='input-error'
+          query='http://yourwebsite.com/account/checkemail'
+          delayError={1400}
+          type='email'
+          validators={[
+            {method: "notEmpty", error: "Email name cannot be empty."},
+            {method: "validEmail", error: "Please enter a valid email."}
+          ]}
+        />
+
+      </div>
+```
+
+</p>
+</details>
+
+```js
+
+      <Button
+        {...rest}
+        disabled={disabled}
+        className='button'
+        disabledClassName='button-disabled'
+        type='nextStep'
+      >
+        Next
+      </Button>
+
+      <Button
+        {...rest}
+        className='button'
+        type='prevStep'
+      >
+        previous
+      </Button>
+    </div>
+  };
+};
+
+class Step3 extends Component {
+
+  constructor() {
+
+    super()
+
+    this.submit = this.submit.bind(this)
+  };
+
+  submit(response) {
+
+    // your response from the server, do whatever you want now!
+  };
+  
+  render() {
+
+    let {disabled, ...rest} = this.props.formProps
+```
+
+<details>
+  <summary>Click to view Inputs.</summary>
+  <p>
+
+```js
+    <div>
+      <div className='input-container'>
+
+        <Response
+          {...formProps}
+          for='Password'
+          errorClassName='input-response-error'
+          matchError={{
+            matchName: 'password',
+            error: 'Password do not match.'
+          }}
+        />
+
+        <label className='label'>Password:</label>
+
+        <Input
+          {...formProps}
+          name='Password'
+          className='input'
+          focusedClassName='input-focused'
+          errorClassName='input-error'
+          delayError={1400}
+          match='password'
+          validators={[
+            {method: "notEmpty", error: "Password name cannot be empty."},
+            {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+          ]}
+          type='password'
+        />
+
+      </div>
+
+      <div className='input-container'>
+
+        <Response 
+          {...formProps}
+          for='PasswordRepeat'
+          errorClassName='input-response-error'
+        />
+
+        <label className='label'>Password Repeat:</label>
+
+        <Input
+          {...formProps}
+          name='PasswordRepeat'
+          className='input'
+          focusedClassName='input-focused'
+          errorClassName='input-error'
+          delayError={1400}
+          match='password'
+          validators={[
+            {method: "notEmpty", error: "Password name cannot be empty."},
+            {method: "validPassword", error: "Password must contain at least 8 character and 1 number."}
+          ]}
+          type='password'
+        />
+
+      </div>
+```
+
+</p>
+</details>
+
+```js
+
+      <Button
+        {...rest}
+        disabled={disabled}
+        className='button'
+        disabledClassName='button-disabled'
+        url='http://yourwebsite.com/signup'
+        success={this.submit}
+        type='submit'
+        >
+        Submit
+      </Button>
+
+      <Button
+        {...rest}
+        className='button'
+        type='prevStep'
+      >
+        previous
       </Button>
     </div>
   };
