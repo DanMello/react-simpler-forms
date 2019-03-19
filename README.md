@@ -172,7 +172,12 @@ class App extends Component {
 
       <h1>Favorite color</h1>
 
-      <Response {...formProps} for={'favorite_color'} errorClassName={'input-response-error'} selectError='Please select a color.'/>
+      <Response 
+        {...formProps}
+        for={'favorite_color'} 
+        errorClassName={'input-response-error'} 
+        selectError='Please select a color.'
+      />
 
       <div className='radio-container'>
         <Input {...formProps} name={'favorite_color'} value='red' type='radio' required/>
