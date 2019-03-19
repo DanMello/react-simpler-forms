@@ -65,7 +65,7 @@ class App extends Component {
   <p>
   
 ```js
-    <div className='App-Input-Container'>
+    <div className='Input-Container'>
 
       <Response {...formProps} for='email' errorClassName='input-response-error' successClassName='input-response-success'/>
 
