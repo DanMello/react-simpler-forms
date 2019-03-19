@@ -26,7 +26,7 @@ class App extends Component {
       form: this.props.form, //form state
       updateform: this.props.updateform //method for updating form state
     };
-    // disabled is also exposed by HOC and is a bool that you can use to disable the submit.
+    // disabled is also exposed by HOC and is a bool that you can use to disable the submit button.
     let disabled = this.props.disabled;
 
     return (
