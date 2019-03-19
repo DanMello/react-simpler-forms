@@ -28,48 +28,13 @@ class App extends Component {
     };
     // disabled is also exposed by HOC and is a bool that you can use to disable the submit button.
     let disabled = this.props.disabled;
+```
+  <details>
+   <summary>Single Step Form</summary>
+   <p>Content 1 Content 1 Content 1 Content 1 Content 1</p>
+  </details>
 
-    return (
-      <div>
-         <div className='App-Input-Container'>
-
-          <Response
-            {...formProps}
-            for={'first_name'}
-            errorClassName={'App-Error'}
-          />
-
-          <label className='App-Label'>First Name:</label>
-
-          <Input
-            {...formProps}
-            name={'first_name'}
-            className={'App-input'}
-            focusedClassName={'App-input-focused'}
-            errorClassName={'App-input-error'}
-            autoComplete={"off"}
-            validators={[
-              {method: "notEmpty", error: "First name cannot be empty."},
-              {method: "onlyLetters", error: "First name can only contain letters."},
-              {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
-            ]}
-          />
-
-          <Button
-            {...formProps}
-            disabled={disabled}
-            className={'App-button'}
-            disabledClassName={'App-button-disabled'}
-            url='http://yourwebsite.com/signup'
-            success={this.submit}
-            type={'submit'}
-            >
-            Submit
-          </Button>
-
-        </div>
-      </div>
-    ) 
+```js
   };
 };
 
