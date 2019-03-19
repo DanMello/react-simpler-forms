@@ -170,7 +170,7 @@ class App extends Component {
 ```js
     <div className='input-radio-container'>
 
-      <h1>What&apos;s your favorite color</h1>
+      <h1>Favorite color</h1>
 
       <Response {...formProps} for={'favorite_color'} errorClassName={'input-response-error'} selectError='Please select a color.'/>
 
