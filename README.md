@@ -44,7 +44,8 @@ class App extends Component {
 
     return (
 
-      // formProps.form.response will contain a response if you don't pass a success callback to the Button component.
+      // formProps.form.response will contain a response 
+      // if you don't pass a success callback to the Button component.
       <div className='formSubmitSuccess'>{formProps.form.response}</div> 
       <div className='formSubmitError'>{formProps.form.error}</div>
 
@@ -292,6 +293,7 @@ class Step1 extends Component {
   <summary>Click to view Inputs.</summary>
   <p>
 
+```js
     <div>
       <div className='input-container'>
 
@@ -334,6 +336,7 @@ class Step1 extends Component {
         />
 
       </div>
+```
 
 </p>
 </details>
