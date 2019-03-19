@@ -245,7 +245,7 @@ class App extends Component {
       disabledClassName='button-disabled'
       url='http://yourwebsite.com/signup'
       success={this.submit} // Success is a function you can pass to handle the response
-      type={'submit'}
+      type='submit'
       >
       Submit
     </Button>
