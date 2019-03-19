@@ -332,6 +332,8 @@ class App extends Component {
 export default SimplerForm(App)
 ```
 
+Demo page for single-step form: [`https://mellocloud.com/react-simpler-forms/single-step`](https://mellocloud.com/react-simpler-forms/single-step)
+
 ### Multi-step forms
 
 ```js
@@ -670,3 +672,6 @@ class App extends Component {
 
 export default SimplerForm(App)
 ```
+
+Demo page for multi-step form: [`https://mellocloud.com/react-simpler-forms/multi-step`](https://mellocloud.com/react-simpler-forms/multi-step)
+
