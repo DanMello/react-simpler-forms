@@ -19,6 +19,19 @@ import React, { Component } from 'react';
 import { SimplerForm, Input, Response, Button } from 'react-simpler-forms';
 
 class App extends Component {
+
+  constructor() {
+  
+    super()
+
+    this.submit = this.submit.bind(this)
+  };
+
+  submit(response) {
+
+    // your response from the server, do whatever you want now!
+  };
+
   render () {
 
     //props exposed by higher order component
