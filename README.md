@@ -67,11 +67,16 @@ class App extends Component {
 ```js
     <div className='Input-Container'>
 
-      <Response {...formProps} for='email' errorClassName='input-response-error' successClassName='input-response-success'/>
+      <Response 
+        {...formProps} 
+        for='email' 
+        errorClassName='input-response-error' 
+        successClassName='input-response-success'
+      />
 
       <label className='label'>Email:</label>
 
-      // Query send JSON post request after user stops typing and input has been validated.
+      // Query sends JSON post request after user stops typing and input has been validated.
       <Input
         {...formProps}
         name='email'
