@@ -1,5 +1,5 @@
 # react-simpler-forms
-React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, query, and submit single or multi-step forms.
+React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, search query, and submit single or multi-step forms.
 
 * Zero dependencies.
 
@@ -52,6 +52,38 @@ class App extends Component {
           {method: "notEmpty", error: "First name cannot be empty."},
           {method: "onlyLetters", error: "First name can only contain letters."},
           {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
+        ]}
+      />
+
+    </div>
+```
+</p>
+</details>
+
+<details>
+  <summary>Click to view Input that executes search query while typing.</summary>
+  <p>
+  
+```js
+    <div className='App-Input-Container'>
+
+      <Response {...formProps} for='email' errorClassName='input-response-error' successClassName='input-response-success'/>
+
+      <label className='label'>Email:</label>
+
+      // Query send JSON post request after user stops typing and input has been validated.
+      <Input
+        {...formProps}
+        name='email'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        query='http://yourwebsite.com/account/checkemail'
+        delayError={1400}
+        type='email'
+        validators={[
+          {method: "notEmpty", error: "Email name cannot be empty."},
+          {method: "validEmail", error: "Please enter a valid email."}
         ]}
       />
 
