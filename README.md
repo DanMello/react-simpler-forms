@@ -21,7 +21,7 @@ import { SimplerForm, Input, Response, Button } from 'react-simpler-forms';
 class App extends Component {
 
   constructor() {
-  
+
     super()
 
     this.submit = this.submit.bind(this)
@@ -43,6 +43,12 @@ class App extends Component {
     let disabled = this.props.disabled;
 
     return (
+
+      // formProps.form.response will contain a response if you don't pass a success callback to the Button component.
+      <div className='formSubmitSuccess'>{formProps.form.response}</div> 
+      <div className='formSubmitError'>{formProps.form.error}</div>
+
+      {formProps.form.loading && 'Loading...'}
 ```
 <details>
   <summary>Click to view basic Input.</summary>
@@ -262,7 +268,111 @@ class App extends Component {
       >
       Submit
     </Button>
-    )
+    );
+  };
+};
+
+export default SimplerForm(App)
+```
+
+### Multi-step forms
+
+```js
+import React, { Component } from 'react';
+import { SimplerForm, Input, Response, Button } from 'react-simpler-forms';
+
+class Step1 extends Component {
+  
+  render() {
+
+    let {disabled, ...rest} = this.props.formProps
+```
+
+<details>
+  <summary>Click to view Inputs.</summary>
+  <p>
+
+    <div>
+      <div className='input-container'>
+
+        <Response {...rest} for={'first_name'} errorClassName='input-response-error' />
+
+        <label className='label'>First Name:</label>
+
+        <Input
+          {...rest}
+          name='first_name'
+          className='input'
+          focusedClassName='input-focused'
+          errorClassName='input-error'
+          validators={[
+            {method: "notEmpty", error: "First name cannot be empty."},
+            {method: "onlyLetters", error: "First name can only contain letters."},
+            {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
+          ]}
+        />
+
+      </div>
+
+      <div className='input-container'>
+
+        <Response {...rest} for={'last_name'} errorClassName='input-response-error' />
+
+        <label className='label'>Last Name:</label>
+
+        <Input
+          {...rest}
+          name='last_name'
+          className='input'
+          focusedClassName='input-focused'
+          errorClassName='input-error'
+          validators={[
+            {method: "notEmpty", error: "Last name cannot be empty."},
+            {method: "onlyLetters", error: "Last name can only contain letters."},
+            {method: "maxCharaters", error: "Last name cannot be longer than 35 characters."}
+          ]}
+        />
+
+      </div>
+
+</p>
+</details>
+
+```js
+
+      <Button
+        {...rest}
+        disabled={disabled}
+        className='button'
+        disabledClassName='button-disabled'
+        type='nextStep'
+        >
+        Next
+      </Button>
+    </div>
+  };
+};
+
+class App extends Component {
+
+  render () {
+
+    let formProps = {
+      form: this.props.form,
+      updateform: this.props.updateform,
+      disabled: this.props.disabled
+    };
+
+    let steps = [
+      <Step1 formProps={formProps} />,
+      <Step2 formProps={formProps} />,
+      <Step3 formProps={formProps} />
+    ];
+
+    return (
+
+      {steps[formProps.form.step]}
+    );
   };
 };
 
