@@ -20,7 +20,7 @@ let ManageForm = function (WrappedComponent) {
       this.updateForm = this.updateForm.bind(this)
       this.updateData = this.updateData.bind(this)
       this.updateMultiple = this.updateMultiple.bind(this)
-      this.decrementStep = this.decrementStep.bind(this)
+      this.incrementStep = this.incrementStep.bind(this)
       this.decrementStep = this.decrementStep.bind(this)
       this.queryData = this.queryData.bind(this)
       this.querySuccess = this.querySuccess.bind(this)
@@ -72,7 +72,7 @@ let ManageForm = function (WrappedComponent) {
 
       let message = response.data
 
-      if (typeof message !== 'string') {
+      if (typeof message !== 'string' || isJson(message)) {
 
         message = 'Something went wrong searching your input.'
       }
@@ -94,7 +94,7 @@ let ManageForm = function (WrappedComponent) {
 
       let message = response.data
 
-      if (typeof message !== 'string') {
+      if (typeof message !== 'string' || isJson(message)) {
 
         message = 'Something went wrong searching your input.'
       }
@@ -153,7 +153,7 @@ let ManageForm = function (WrappedComponent) {
 
       let message = response
 
-      if (typeof message !== 'string') {
+      if (typeof message !== 'string' || isJson(message)) {
 
         message = 'Something went submitting your data.'
       }
