@@ -288,6 +288,7 @@ class Step1 extends Component {
   render() {
 
     let {disabled, ...rest} = this.props.formProps
+    
     return (
       <div>
 ```
@@ -364,6 +365,7 @@ class Step2 extends Component {
   render() {
 
     let {disabled, ...rest} = this.props.formProps
+
     return (
       <div>
 ```
