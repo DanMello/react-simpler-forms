@@ -163,6 +163,37 @@ class App extends Component {
 </p>
 </details>
 
+<details>
+  <summary>Click to view radio button Inputs.</summary>
+  <p>
+  
+```js
+    <div className='input-radio-container'>
+
+      <h1>What's your favorite color</h1>
+
+      <Response {...formProps} for={'favorite_color'} errorClassName={'input-response-error'} selectError='Please select a color.'/>
+
+      <div className='radio-container'>
+        <Input {...formProps} name={'favorite_color'} value='red' type='radio' required/>
+        <label className='label'>Red</label>
+      </div>
+
+      <div className='radio-container'>
+        <Input {...formProps} name={'favorite_color'} value='green' type='radio'/>
+        <label className='label'>Green</label>
+      </div>
+
+      <div className='radio-container'>
+        <Input {...formProps} name={'favorite_color'} value='blue' type='radio'/>
+        <label className='label'>Blue</label>
+      </div>
+
+    </div>
+```
+</p>
+</details>
+
 ```js
     )
   };
