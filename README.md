@@ -218,6 +218,37 @@ class App extends Component {
 </details>
 
 <details>
+  <summary>Click to view textarea Input.</summary>
+  <p>
+  
+```js
+    <div className='input-Container'>
+
+      <Response
+        {...formProps}
+        for='message'
+        errorClassName='input-response-error'
+      />
+
+      <label className='label'>Message:</label>
+
+      <Input
+        {...formProps}
+        name='message'
+        className='input'
+        focusedClassName='input-focused'
+        errorClassName='input-error'
+        type='textarea'
+        scrollUp // after user finished message it will scroll to top of page.
+        // You can use any validators here too
+      />
+
+    </div>
+```
+</p>
+</details>
+
+<details>
   <summary>Click to view radio button Inputs.</summary>
   <p>
   
@@ -321,6 +352,13 @@ class App extends Component {
       disabledClassName='button-disabled'
       url='http://yourwebsite.com/signup'
       success={this.submit}
+      extraData={{
+        token: user.token,
+        /* more whatever
+          If you need to send more data with the request body
+          you can put that here.
+        */
+      }}
       type='submit'
       >
       Submit

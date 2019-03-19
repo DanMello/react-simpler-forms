@@ -85,10 +85,10 @@ export default class Button extends Component {
 
     if (this.props.extraData) {
 
-      this.props.extraData.forEach(item => {
-
-        data[item.property] = item.value
-      })
+      data = {
+        ...data,
+        ...this.props.extraData
+      }
     }
 
     let payload = {

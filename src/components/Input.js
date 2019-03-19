@@ -29,7 +29,7 @@ class Input extends Component {
       );
     }
 
-    if (!Array.isArray(this.props.validators) && this.props.type !== 'select' && this.props.type !== 'radio') {
+    if (!Array.isArray(this.props.validators) && this.props.type !== 'select' && this.props.type !== 'radio' && this.props.type !== 'textarea') {
 
       console.error(
         "Input prop 'validators' is required and must be an array.\n",
@@ -74,7 +74,18 @@ class Input extends Component {
 
       } else {
 
-        payload.validators = this.props.validators
+        if (this.props.type !== 'textarea') {
+
+          payload.validators = this.props.validators
+
+        } else {
+
+          if (!!this.props.validators) {
+            
+            payload.validators = this.props.validators            
+          }
+        }
+
       }
 
       if (this.props.query) {
@@ -100,8 +111,12 @@ class Input extends Component {
 
     let payload = {
       value: e.target.value,
-      error: validator(this.props.validators, e.target.value),
       property: this.props.name
+    }
+
+    if (this.props.validators) {
+
+      payload.error = validator(this.props.validators, e.target.value)
     }
 
     if (this.props.delayError) {

@@ -58,7 +58,7 @@ let ManageForm = function (WrappedComponent) {
 
       let message = response.data
 
-      if (typeof message !== 'string' || isJson(message)) {
+      if (typeof message !== 'string' || isJson(message) || message === '') {
 
         message = 'Something went wrong searching your input.'
       }
@@ -80,7 +80,7 @@ let ManageForm = function (WrappedComponent) {
 
       let message = response.data
 
-      if (typeof message !== 'string' || isJson(message)) {
+      if (typeof message !== 'string' || isJson(message) || message === '') {
 
         message = 'Something went wrong searching your input.'
       }
@@ -124,7 +124,7 @@ let ManageForm = function (WrappedComponent) {
 
       let message = response
 
-      if (typeof message !== 'string' || isJson(message)) {
+      if (typeof message !== 'string' || isJson(message) || message === '') {
 
         message = 'Your data was submitted successfully.'
       }
@@ -139,7 +139,7 @@ let ManageForm = function (WrappedComponent) {
 
       let message = response
 
-      if (typeof message !== 'string' || isJson(message)) {
+      if (typeof message !== 'string' || isJson(message) || message === '') {
 
         message = 'Something went wrong submitting your data.'
       }
