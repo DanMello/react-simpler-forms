@@ -36,26 +36,26 @@ class App extends Component {
   <p>
   
 ```js
-<div className='Input-Container'>
+    <div className='input-Container'>
 
-  <Response {...formProps} for={'first_name'} errorClassName={'input-response-error'} />
+      <Response {...formProps} for={'first_name'} errorClassName={'input-response-error'} />
 
-  <label className='label'>First Name:</label>
+      <label className='label'>First Name:</label>
 
-  <Input
-    {...formProps}
-    name={'first_name'}
-    className={'input'}
-    focusedClassName={'input-focused'}
-    errorClassName={'input-error'}
-    validators={[
-      {method: "notEmpty", error: "First name cannot be empty."},
-      {method: "onlyLetters", error: "First name can only contain letters."},
-      {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
-    ]}
-  />
+      <Input
+        {...formProps}
+        name={'first_name'}
+        className={'input'}
+        focusedClassName={'input-focused'}
+        errorClassName={'input-error'}
+        validators={[
+          {method: "notEmpty", error: "First name cannot be empty."},
+          {method: "onlyLetters", error: "First name can only contain letters."},
+          {method: "maxCharaters", error: "First name cannot be longer than 35 characters."}
+        ]}
+      />
 
-</div>
+    </div>
 ```
 </p>
 </details>
