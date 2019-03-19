@@ -174,27 +174,59 @@ class App extends Component {
 
       <Response 
         {...formProps}
-        for={'favorite_color'} 
-        errorClassName={'input-response-error'} 
+        for='favorite_color'
+        errorClassName='input-response-error'
         selectError='Please select a color.'
       />
 
       <div className='radio-container'>
-        <Input {...formProps} name={'favorite_color'} value='red' type='radio' required/>
+        <Input {...formProps} name='favorite_color' value='red' type='radio' required/>
         <label className='label'>Red</label>
       </div>
 
       <div className='radio-container'>
-        <Input {...formProps} name={'favorite_color'} value='green' type='radio'/>
+        <Input {...formProps} name='favorite_color' value='green' type='radio'/>
         <label className='label'>Green</label>
       </div>
 
       <div className='radio-container'>
-        <Input {...formProps} name={'favorite_color'} value='blue' type='radio'/>
+        <Input {...formProps} name='favorite_color' value='blue' type='radio'/>
         <label className='label'>Blue</label>
       </div>
 
     </div>
+```
+</p>
+</details>
+
+<details>
+  <summary>Click to view select Inputs.</summary>
+  <p>
+  
+```js
+   <div className='select-container'>
+  
+    <Response {...formProps} for='state' errorClassName='input-response-error' selectError='Please select a state.'/>
+
+    <label className='App-Label'>Select State:</label>
+
+    <Input
+      {...formProps}
+      required
+      name='state'
+      type='select'
+      className='select-class'
+      oddOptionClass='odd-option-class'
+      evenOptionClass='even-option-class'
+      options={[
+        {value: '', text: 'Please select an option'},
+        {value: 'MA', text: 'Massachusetts'},
+        {value: 'FL', text: 'Florida'},
+        {value: 'CA', text: 'California'}
+      ]}
+      />
+
+  </div>
 ```
 </p>
 </details>
