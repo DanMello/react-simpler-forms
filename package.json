@@ -1,7 +1,7 @@
 {
   "name": "react-simpler-forms",
   "version": "1.0.0",
-  "description": "React components that make it easy to create, validate, query, and submit single or multi-step forms. ",
+  "description": "React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, perform search queries, and submit single or multi-step forms.",
   "main": "dist/main.bundle.js",
   "peerDependencies": {
     "react": "^16.5.2",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DanMello/redux-smart-forms"
+    "url": "https://github.com/DanMello/react-simpler-forms"
   },
   "author": {
     "name": "Dan Mello",

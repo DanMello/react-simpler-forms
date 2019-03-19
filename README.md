@@ -367,6 +367,7 @@ class App extends Component {
   };
 };
 
+// Wrap your component with the Higher Order Component
 export default SimplerForm(App)
 ```
 
