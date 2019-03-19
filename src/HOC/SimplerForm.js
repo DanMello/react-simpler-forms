@@ -18,20 +18,6 @@ let ManageForm = function (WrappedComponent) {
       }
 
       this.updateForm = this.updateForm.bind(this)
-      this.updateData = this.updateData.bind(this)
-      this.updateMultiple = this.updateMultiple.bind(this)
-      this.incrementStep = this.incrementStep.bind(this)
-      this.decrementStep = this.decrementStep.bind(this)
-      this.queryData = this.queryData.bind(this)
-      this.querySuccess = this.querySuccess.bind(this)
-      this.queryError = this.queryError.bind(this)
-      this.resetFormResponses = this.resetFormResponses.bind(this)
-      this.submitForm = this.submitForm.bind(this)
-      this.submitError = this.submitError.bind(this)
-      this.submitSuccess = this.submitSuccess.bind(this)
-      this.toggleLoading = this.toggleLoading.bind(this)
-      this.resetFields = this.resetFields.bind(this)
-      this.resetForm = this.resetForm.bind(this)
     }
 
     updateData(payload) {
