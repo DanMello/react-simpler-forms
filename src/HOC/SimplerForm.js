@@ -155,7 +155,7 @@ let ManageForm = function (WrappedComponent) {
 
       if (typeof message !== 'string' || isJson(message)) {
 
-        message = 'Something went submitting your data.'
+        message = 'Something went wrong submitting your data.'
       }
 
       this.setState({
