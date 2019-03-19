@@ -1,9 +1,9 @@
 # react-simpler-forms
 React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, query, and submit single or multi-step forms.
 
--- Zero dependencies.
+* Zero dependencies.
 
--- 100% declarative.
+* 100% declarative.
 
 ### Requirements
 1. React and React-dom 16.5.2 or greater.
