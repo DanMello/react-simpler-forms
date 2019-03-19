@@ -238,7 +238,8 @@ class App extends Component {
           {...formProps} 
           required
           name='favorite_color' 
-          value='red' type='radio' 
+          value='red' 
+          type='radio' 
         />
         <label className='label'>Red</label>
       </div>
@@ -282,7 +283,7 @@ class App extends Component {
       selectError='Please select a state.'
     />
 
-    <label className='App-Label'>Select State:</label>
+    <label className='label'>Select State:</label>
 
     <Input
       {...formProps}
