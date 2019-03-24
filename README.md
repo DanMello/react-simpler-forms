@@ -8,6 +8,8 @@ React Higher Order component that manages all of your forms state along with oth
 ### Requirements
 1. React and React-dom 16.5.2 or greater.
 
+2. Babel 7
+
 ### Usage
 
 ```bash
@@ -406,8 +408,6 @@ class App extends Component {
 export default SimplerForm(App)
 ```
 
-Demo page for single-step form: [`https://mellocloud.com/react-simpler-forms/single-step`](https://mellocloud.com/react-simpler-forms/single-step)
-
 ### Multi-step forms
 
 ```js
@@ -747,5 +747,5 @@ class App extends Component {
 export default SimplerForm(App)
 ```
 
-Demo page for multi-step form: [`https://mellocloud.com/react-simpler-forms/multi-step`](https://mellocloud.com/react-simpler-forms/multi-step)
+Demo page : [`https://mellocloud.com/react-simpler-forms`](https://mellocloud.com/react-simpler-forms)
 
