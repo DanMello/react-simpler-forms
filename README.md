@@ -16,6 +16,8 @@ React Higher Order component that manages all of your forms state along with oth
 npm install react-simpler-forms --save
 ```
 
+### Single-step form
+
 ```js
 import React, { Component } from 'react';
 import { SimplerForm, Input, Response, Button } from 'react-simpler-forms';
@@ -408,7 +410,7 @@ class App extends Component {
 export default SimplerForm(App)
 ```
 
-### Multi-step forms
+### Multi-step form
 
 ```js
 import React, { Component } from 'react';
