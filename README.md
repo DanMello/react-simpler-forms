@@ -346,7 +346,12 @@ class App extends Component {
 ```js
     <div>
 
-      <Response  {...formProps} errorClassName='react-simpler-forms-response-error' for='terms' selectError='You must agree to terms'/>
+      <Response  
+        {...formProps} 
+        for='terms'
+        errorClassName='input-response-error' 
+        selectError='You must agree to terms'
+      />
 
       <div>
         
