@@ -39,14 +39,16 @@ class App extends Component {
       form: this.props.form, //form state
       updateform: this.props.updateform //method for updating form state
     };
-    /* disabled is also exposed by HOC and is a bool 
+    /* disabled is also exposed by HOC and is a boolean
     that you can use to disable the submit button. */
     let disabled = this.props.disabled;
 
     return (
 
-      /* formProps.form.response will contain a response 
-       if you don't pass a success callback to the Button component. */
+      /* formProps.form.response will contain the success response from the server
+       if you don't pass a success callback to the Button component. Also if you 
+       don't pass a success callback the form inputs will reset upon success.
+       */
       <div className='formSubmitSuccess'>{formProps.form.response}</div> 
       //If you get an error from the server that will be here.
       <div className='formSubmitError'>{formProps.form.error}</div>
@@ -62,7 +64,7 @@ class App extends Component {
 
       <Response 
         {...formProps}
-        for={'first_name'} 
+        for='first_name'
         errorClassName='input-response-error' 
       />
 
@@ -337,6 +339,34 @@ class App extends Component {
 </p>
 </details>
 
+<details>
+  <summary>Click to view checkbox Input.</summary>
+  <p>
+  
+```js
+    <div>
+
+      <Response  {...formProps} errorClassName='react-simpler-forms-response-error' for='terms' selectError='You must agree to terms'/>
+
+      <div>
+        
+        <Input 
+          {...formProps} 
+          name='terms' 
+          value='Agreed'
+          type='checkbox' 
+          required
+          />
+
+        <label className='label'>By checking this box you agree to the terms.</label>
+
+      </div>
+
+    </div>
+```
+</p>
+</details>
+
 ```js
     /* 
     Submit sends a json post request to your url 
@@ -367,7 +397,7 @@ class App extends Component {
   };
 };
 
-// Wrap your component with the Higher Order Component
+// Wrap your component with the Higher Order Component.
 export default SimplerForm(App)
 ```
 

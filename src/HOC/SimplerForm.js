@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { validator, isEmpty, allmatch, isJson } from '../helpers/validators'
+import { validator, isEmpty, allInputsMatch, isJson, allInputsQueried, allSelectionsValidated, allInputsErrorFalse} from '../helpers/validators'
 import FormAPI from '../helpers/api'
 
 let ManageForm = function (WrappedComponent) {
@@ -7,6 +7,7 @@ let ManageForm = function (WrappedComponent) {
   return class extends Component {
 
     constructor() {
+
       super()
 
       this.state = {
@@ -129,9 +130,54 @@ let ManageForm = function (WrappedComponent) {
         message = 'Your data was submitted successfully.'
       }
 
+      let data = Object.keys(this.state.data).reduce((acc, current) => {
+        
+        let obj = {...acc}
+
+        obj[current] = {...this.state.data[current]}
+
+        obj[current].error = null
+        obj[current].value = null
+
+        if (this.state.data[current].query) {
+
+          obj[current].queryVerified = false
+          obj[current].queryDelay = null
+          obj[current].queryResponse = null
+        }
+
+        if (this.state.data[current].values) {
+
+          delete obj[current].value
+
+          let newValues = this.state.data[current].values.reduce((acc, current) => {
+
+            let array = [...acc]
+
+            let obj = {
+              ...current,
+              checked: false
+            }
+
+            array.push(obj)
+
+            return array
+
+          }, [])
+
+          obj[current].values = newValues
+        }
+
+        return obj
+
+      }, {})
+
       this.setState({
         response: message,
-        error: false
+        error: false,
+        step: 0,
+        data,
+        loading: false
       })
     }
 
@@ -240,13 +286,32 @@ let ValidateInputs = function (WrappedComponent) {
 
       if (!isEmpty(data)) {
 
-        allValid = Object.keys(data)
-          .filter(property => !!data[property].validators)
-          .every(input => !data[input].error && data[input].error !== null)
+        allValid = allInputsErrorFalse(data)
       }
 
       return (
         <WrappedComponent {...this.props} allValid={allValid} />
+      )
+    }
+  }
+}
+
+let ValidateSelectionInputs = function (WrappedComponent) {
+
+  return class extends Component {
+
+    render() {
+
+      let data = this.props.data
+      let SelectionsValid = true
+
+      if (!isEmpty(data)) {
+
+        SelectionsValid = allSelectionsValidated(data)
+      }
+
+      return (
+        <WrappedComponent {...this.props} allSelectionsValid={SelectionsValid} />
       )
     }
   }
@@ -263,9 +328,7 @@ let ValidateQuerys = function (WrappedComponent) {
 
       if (!isEmpty(data)) {
 
-        allQueried = Object.keys(data)
-          .filter(property => data[property].query)
-          .every(property => data[property].queryVerified === true)
+        allQueried = allInputsQueried(data)
       }
 
       return (
@@ -287,7 +350,7 @@ let MatchInputs = function (WrappedComponent) {
 
       if (!isEmpty(data)) {
 
-        allMatch = allmatch(data)
+        allMatch = allInputsMatch(data)
       }
 
       return (
@@ -303,12 +366,13 @@ let EnableButton = function (WrappedComponent) {
 
     render() {
 
-      let { allValid, allQueried, allMatch, ...rest} = this.props
+      let { allValid, allQueried, allMatch, allSelectionsValid, ...rest} = this.props
 
       let conditionArray = [
         allValid,
         allQueried,
-        allMatch
+        allMatch,
+        allSelectionsValid
       ]
 
       let condition = conditionArray.every(item => item === true)
@@ -322,5 +386,5 @@ let EnableButton = function (WrappedComponent) {
 
 export default function SimplerForm (component) {
 
-  return ManageForm(FilterData(ValidateInputs(ValidateQuerys(MatchInputs(EnableButton(component))))))
+  return ManageForm(FilterData(ValidateInputs(ValidateSelectionInputs(ValidateQuerys(MatchInputs(EnableButton(component)))))))
 }

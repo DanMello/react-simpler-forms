@@ -8,15 +8,57 @@ class Input extends Component {
     super()
 
     this.state = {
-      queryDelay: null,
-      typingDelay: null,
-      focused: false,
+      checkbox: {},
+      radio: {}
     }
 
     this.onChangeInput = this.onChangeInput.bind(this)
     this.onChangeSelection = this.onChangeSelection.bind(this)
     this.onFocus = this.onFocus.bind(this)
     this.onBlur = this.onBlur.bind(this)
+  }
+
+  componentDidUpdate(prevProps) {
+
+    if (this.props.value === this.state.checkbox.value && this.props.value !== undefined && this.state.checkbox.value !== undefined) {
+
+      if (prevProps.form.data[this.props.name]) {
+
+        let array = prevProps.form.data[this.props.name].values
+        let currentItemArray = array.filter(item => item.value === this.state.checkbox.value)
+
+        if (currentItemArray.length === 0) {
+
+          let newArray = [...array]
+
+          newArray.push(this.state.checkbox)
+
+          let payload = {
+            property: this.props.name,
+            values: newArray
+          }
+
+          this.props.updateform('updateData', payload)
+        }
+      }
+    }
+
+    if (this.props.name === this.state.radio.property && this.props.name !== undefined && this.state.radio.property !== undefined) {
+
+      if (prevProps.form.data[this.props.name]) {
+
+        if (prevProps.form.data[this.props.name].checked !== this.state.radio.checked) {
+
+          let payload = {
+            property: this.props.name,
+            checked: true,
+            value: this.state.radio.value
+          }
+
+          this.props.updateform('updateData', payload)
+        }
+      }
+    }
   }
 
   componentDidMount() {
@@ -29,7 +71,7 @@ class Input extends Component {
       );
     }
 
-    if (!Array.isArray(this.props.validators) && this.props.type !== 'select' && this.props.type !== 'radio' && this.props.type !== 'textarea') {
+    if (!Array.isArray(this.props.validators) && this.props.type !== 'select' && this.props.type !== 'radio' && this.props.type !== 'textarea' && this.props.type !== 'checkbox') {
 
       console.error(
         "Input prop 'validators' is required and must be an array.\n",
@@ -58,41 +100,108 @@ class Input extends Component {
     if (!this.props.form.data[this.props.name]) {
 
       let payload = {
-        value: '',
         step: this.props.form.step,
         error: null,
-        property: this.props.name
+        property: this.props.name,
+        focused: false,
+        value: null,
+        validators: this.props.validators
       }
 
-      if (this.props.type === 'radio' || this.props.type === 'select') {
+      if (this.props.type === 'checkbox') {
+
+        delete payload.value
+        delete payload.validators
+
+        let checkbox = {
+          value: this.props.value
+        }
+
+        if (this.props.required) {
+
+          checkbox.required = true
+        }
+
+        if (this.props.checked) {
+
+          checkbox.checked = true
+
+        } else {
+
+          checkbox.checked = false
+        }
+
+        payload.values = []
+        payload.error = false
+
+        this.setState({
+          checkbox: checkbox
+        }, () => {
+
+          this.forceUpdate()
+        })
+      }
+
+      if (this.props.type === 'radio') {
+
+        delete payload.validators
 
         if (this.props.required) {
 
           payload.required = true
-          payload.validators = [ {method: "notEmpty", error: true} ]
         }
 
-      } else {
+        if (this.props.checked) {
+          
+          this.setState({
+            radio: {
+              value: this.props.value,
+              property: this.props.name,
+              checked: true
+            }
+          }, () => {
 
-        if (this.props.type !== 'textarea') {
-
-          payload.validators = this.props.validators
-
-        } else {
-
-          if (!!this.props.validators) {
-            
-            payload.validators = this.props.validators            
-          }
+            this.forceUpdate()
+          })
         }
 
+        payload.checked = false
+        payload.error = false
+      }
+
+      if (this.props.type === 'select') {
+
+        delete payload.validators
+
+        if (this.props.required) {
+
+          payload.required = true
+        }
+
+        payload.error = false
+      }
+
+      if (this.props.type === 'textarea') {
+
+        if (!this.props.validators) {
+
+          delete payload.validators
+        }
+      }
+
+      if (this.props.delayError) {
+
+        payload.typingDelay = null
+        payload.typing = false
       }
 
       if (this.props.query) {
 
+        payload.typing = false
         payload.query = true
         payload.queryVerified = false
         payload.queryResponse = null
+        payload.queryDelay = null
       }
 
       if (this.props.match) {
@@ -106,12 +215,24 @@ class Input extends Component {
 
   onChangeInput (e) {
 
-    if (this.state.queryDelay) clearTimeout(this.state.queryDelay)
-    if (this.state.typingDelay) clearTimeout(this.state.typingDelay)
-
     let payload = {
       value: e.target.value,
       property: this.props.name
+    }
+
+    if (this.props.form.data[this.props.name].queryDelay) {
+
+      clearTimeout(this.props.form.data[this.props.name].queryDelay)
+
+      payload.queryDelay = null
+    }
+
+    if (this.props.form.data[this.props.name].typingDelay) {
+
+      clearTimeout(this.props.form.data[this.props.name].typingDelay)
+
+      payload.typing = false
+      payload.typingDelay = null
     }
 
     if (this.props.validators) {
@@ -119,17 +240,15 @@ class Input extends Component {
       payload.error = validator(this.props.validators, e.target.value)
     }
 
-    if (this.props.delayError) {
+    if (this.props.delayError && payload.error) {
 
       payload.typing = true
 
-      this.setState({
-        typingDelay: setTimeout(() => {
+      payload.typingDelay = setTimeout(() => {
 
-          this.props.updateform('updateData', {property: this.props.name, typing: false})
+        this.props.updateform('updateData', {property: this.props.name, typing: false})
 
-        }, this.props.delayError)
-      })
+      }, this.props.delayError)
     }
 
     if (this.props.query) {
@@ -141,22 +260,20 @@ class Input extends Component {
 
         payload.typing = false
 
-        this.setState({
-          queryDelay: setTimeout(() => {
+        payload.queryDelay = setTimeout(() => {
 
-            let value = this.props.form.data[this.props.name].value
+          let value = this.props.form.data[this.props.name].value
 
-            let payload = {
-              data: { [this.props.name]: value },
-              url: this.props.query,
-              cancelable: true,
-              property: this.props.name
-            }
+          let payload = {
+            data: { [this.props.name]: value },
+            url: this.props.query,
+            cancelable: true,
+            property: this.props.name
+          }
 
-            this.props.updateform('queryData', payload)
+          this.props.updateform('queryData', payload)
 
-          }, 350)
-        })
+        }, 350)
       }
     }
 
@@ -168,8 +285,9 @@ class Input extends Component {
     let formInput = this.props.form.data[this.props.name]
 
     let payload = {
+      property: this.props.name,
       value: this.props.value || e.target.value,
-      property: this.props.name
+      error: false
     }
 
     if (this.props.type === 'radio') {
@@ -177,9 +295,30 @@ class Input extends Component {
       payload.checked = true
     }
 
-    if (formInput.required === true) {
+    if (this.props.type === 'select' && payload.value === '') {
 
-      payload.error = validator(formInput.validators, payload.value)
+      payload.error = true
+    }
+
+    if (this.props.type === 'checkbox') {
+
+      delete payload.value
+
+      let currentArray = [...formInput.values]
+      let currentItem = currentArray.filter(item => item.value === this.props.value)
+      let indexOf = currentArray.indexOf(currentItem[0])
+      
+      currentArray[indexOf].checked = !currentArray[indexOf].checked
+
+      let allrequiredTrue = currentArray.filter(item => item.required).every(item => item.checked === true)
+
+      if (!allrequiredTrue) {
+
+        payload.error = true
+      } 
+
+
+      payload.values = currentArray
     }
 
     this.props.updateform('updateData', payload)
@@ -187,9 +326,12 @@ class Input extends Component {
 
   onFocus () {
 
-    this.setState({
+    let payload = {
+      property: this.props.name,
       focused: true
-    })
+    }
+
+    this.props.updateform('updateData', payload)
   }
 
   onBlur() {
@@ -199,26 +341,44 @@ class Input extends Component {
       window.scroll(0,0)
     }
 
-    this.setState({
+    let payload = {
+      property: this.props.name,
       focused: false
-    })
+    }
+
+    this.props.updateform('updateData', payload)
   }
 
   render () {
 
     let { name, delayError, match, validators, query, focusedClassName, errorClassName, form, className, scrollUp, updateform, ...rest} = this.props
     let input = this.props.form.data[this.props.name]
-    let error, typing, value, inputType, classNames, checked
+    let error, typing, value, inputType, classNames, checked, focused
 
     if (input) {
 
-      checked = input.checked
-      value = input.value
+      if (this.props.type === 'checkbox') {
+
+        let currentInput = input.values.filter(item => item.value === this.props.value)
+
+        if (currentInput.length > 0) {
+
+          value = currentInput[0].value
+          checked = currentInput[0].checked
+        }
+
+      } else {
+
+        value = input.value
+        checked = input.checked
+      }
+
+      focused = input.focused
       error = input.error
       typing = input.typing
     }
 
-    if (this.state.focused && (!error || typing)) {
+    if (focused && (!error || typing)) {
 
       classNames = [className, focusedClassName]
 
@@ -269,8 +429,8 @@ class Input extends Component {
           {...rest}
           name={name}
           className={classNames.join(' ')}
-          onChange={this.props.type !== 'radio' ? this.onChangeInput : this.onChangeSelection}
-          checked={this.props.type === 'radio' && value === this.props.value && checked ? checked : false}
+          onChange={(this.props.type !== 'radio' && this.props.type !== 'checkbox') ? this.onChangeInput : this.onChangeSelection}
+          checked={(this.props.type === 'radio' || this.props.type === 'checkbox') && value === this.props.value && checked ? checked : false}
           value={value ? value : ''} 
           onBlur={this.onBlur} 
           onFocus={this.onFocus} 

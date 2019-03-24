@@ -7,7 +7,7 @@ function validator (validators, input) {
 
       error = errormessage
 
-      return input !== ''
+      return input !== null && input !== ''
     },
     onlyLetters: function (input, errormessage) {
 
@@ -51,7 +51,7 @@ function validator (validators, input) {
   return errorType ? errorType : false
 }
 
-function allmatch (data) {
+function allInputsMatch (data) {
 
   let matchingGroups = Object.keys(data)
     .filter(input => data[input].match)
@@ -66,6 +66,50 @@ function allmatch (data) {
   return Object.keys(matchingGroups)
     .map(a => matchingGroups[a].every(b => matchingGroups[a][0].value === b.value))
     .every(item => !!item)
+}
+
+function allSelectionsValidated(data, checkboxonly) {
+  
+  let allRequired = Object.keys(data)
+    .filter(property => data[property].required)
+    .every(input => !!data[input].value)
+
+  let allCheckBoxes = Object.keys(data)
+    .filter(property => data[property].values)
+    .reduce((acc, current) => ({
+      ...acc,
+      [current] : {
+        ...data[current].values
+      }
+    }), {})
+
+  let allRequiredCheckboxes = Object.keys(allCheckBoxes).every(property => {
+
+    return Object.keys(data[property].values).filter(item => {
+
+      return data[property].values[item].required
+
+    }).every(item => {
+
+      return data[property].values[item].checked === true
+    })
+  })
+
+  let array = checkboxonly ? [allRequiredCheckboxes] : [allRequired, allRequiredCheckboxes]
+
+  return array.every(item => item === true)
+}
+
+function allInputsQueried(data) {
+
+  return Object.keys(data)
+        .filter(property => data[property].query)
+        .every(property => data[property].queryVerified === true)
+}
+
+function allInputsErrorFalse(data) {
+
+  return Object.keys(data).every(input => data[input].error === false)
 }
 
 function isEmpty(obj) {
@@ -96,8 +140,11 @@ function isJson(item) {
 }
 
 export {
-  allmatch,
-  isEmpty,
   validator,
-  isJson
+  isEmpty,
+  isJson,
+  allInputsMatch,
+  allSelectionsValidated,
+  allInputsQueried,
+  allInputsErrorFalse
 }

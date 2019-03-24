@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { validator, allmatch } from '../helpers/validators'
+import { validator, allInputsMatch, allSelectionsValidated, allInputsQueried, allInputsErrorFalse} from '../helpers/validators'
 
 export default class Button extends Component {
 
@@ -35,25 +35,49 @@ export default class Button extends Component {
 
     let payload = Object.keys(formData)
       .filter(property => formData[property].step === step)
-      .filter(property => !!formData[property].validators)
-      .reduce((acc, current) => ({
-        ...acc,
-        [current]: {
-          ...formData[current],
-          error: !formData[current].error ? validator(formData[current].validators, formData[current].value) : formData[current].error
+      .reduce((acc, current) => {
+
+        let obj = {...acc}
+
+        if (formData[current].error === null && formData[current].value !== '' && formData[current].validators) {
+
+          obj[current] = {
+            ...formData[current],
+            error: validator(formData[current].validators, formData[current].value)
+          }
+
+        } else if (formData[current].required === true && formData[current].value === null) {
+
+          obj[current] = {
+            ...formData[current],
+            error: true
+          }
+
+        } else if (formData[current].values) {
+
+          let formInput = {}
+          formInput[current] = {...formData[current]}
+
+          let selectionsValidated = allSelectionsValidated(formInput, true)
+
+          if (!selectionsValidated) {
+            obj[current] = {
+              ...formData[current],
+              error: true
+            }
+          }
         }
-      }), {})
 
-    let allpasstest = Object.keys(payload)
-      .every(input => payload[input].error === false)
+        return obj
 
-    let allInputsQueried = Object.keys(payload)
-          .filter(property => payload[property].query)
-          .every(property => payload[property].queryVerified === true)
+      }, {})
 
-    let allinputsMatch = allmatch(payload)
+    let allpasstest = allInputsErrorFalse(payload)
+    let inputsQueried = allInputsQueried(payload)
+    let selectionsValidated = allSelectionsValidated(payload)
+    let inputsMatch = allInputsMatch(payload)
 
-    if (!allpasstest || !allinputsMatch || !allInputsQueried) {
+    if (!allpasstest || !inputsQueried || !selectionsValidated || !inputsMatch) {
 
       this.props.updateform('updateMultiple', payload)
 
@@ -117,7 +141,7 @@ export default class Button extends Component {
 
     if (this.props.type !== 'prevStep') {
 
-      if (this.props.disabled === undefined) {
+      if (this.props.disabled === undefined || (this.props.disabled === false && this.props.disabledBasedOnState === true)) {
 
         let test = this.validateAllInputs()
 
