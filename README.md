@@ -10,7 +10,7 @@ React Higher Order component that manages all of your forms state along with oth
 
 2. Babel 7
 
-### Usage
+### Installation
 
 ```bash
 npm install react-simpler-forms --save
@@ -751,3 +751,43 @@ export default SimplerForm(App)
 
 Demo page : [`https://mellocloud.com/react-simpler-forms`](https://mellocloud.com/react-simpler-forms)
 
+# Components
+
+### SimplerForm
+This is the higher order component that is used to manage all of your forms state and manage whether button is disabled or not. Simply wrap around a component where you want to create a new form.
+
+The higher order component passed down three props
+
+1. this.props.form
+2. this.props.updateform
+3. this.props.disabled
+
+All components required this.props.form and this.props.updateform. If you want to disable the button until validation then you can pass disabled={this.props.disabled} to the Button component.
+
+Make sure you pass the form and updateform props using the same name
+
+```js
+form={this.props.form}
+formupdate={this.props.updateform}
+```
+
+### Input
+This the component that is used to create all your inputs including text, email, password, textarea, select, radio, and checkbox
+
+Prop | Description | type
+---- | ----------- | -------
+`name` | The input name | string
+`className` | This is the default className for the input | string
+`focusedClassName` | When input is focused this classname will be applied to the input along with className | string
+`errorClassName` | When there is an error with the input, this classname will be applied to the input along with className | string
+`validators` | This is an array of objects that contain methods to validate the input along with an error. By default react-simpler-forms comes with the following validators 'notEmpty', 'onlyLetters', 'maxCharacters' (35 characters), 'validEmail', 'validPassword' (At least 8 characters and 1 number). You can pass custom validators as well, by putting a function in the method property, more info below under custom validators. | array
+`delayError` | You can add a typing delay before showing the error. For example if someone is typing their email and you don't want to show an error right when they type that the email is invalid then you can pass a number to the delayError prop. The number is a delay in milliseconds.  | number
+`query` | If you want to perform a search query when the user is typing, you can pass a url and this will send a POST request with the input to your url. The post request is only made after the input is validated using the validators. | string
+`match` | This is used when you need two or more inputs to match, put this prop with the same value on all the inputs that need to match | string
+`type` | This is used to specify the type of input, you can pass text, email, password, textarea, radio, select or checkbox. | string
+`required` | This only applies to the select, radio and checkbox input. For radio buttons just put required on the first radio button input and it will work because you can only select one input. For checkbox you have to apply required to each input you want to be required and the error gets grouped based on the checkbox name, meaning you can only display one error per category which is based on the name you pass to the input. | boolean
+`options` | This only applies to the select input and its an array of options | array
+`value` | For radio and checkbox you need to pass a value prop with the input value | string
+`scrollUp` | For textarea only, if you need to scroll up when you're done typing. I use this in my contact form on my website because the submit button is on top of the textarea and it scrolls down a lot if you type a long message. | boolean
+
+Aside from that you can pass other props that are normally used with inputs like autoComplete='off' or whatever.
