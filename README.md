@@ -1,4 +1,7 @@
 # react-simpler-forms
+
+[![npm version](https://badge.fury.io/js/react-simpler-forms.svg)](//npmjs.com/package/react-simpler-forms)
+
 React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, perform search queries, and submit single or multi-step forms.
 
 * Zero dependencies.
