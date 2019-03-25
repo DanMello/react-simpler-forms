@@ -775,7 +775,7 @@ formupdate={this.props.updateform}
 This the component that is used to create all your inputs including text, email, password, textarea, select, radio, and checkbox
 
 Prop | Description | type
----- | ----------- | -------
+---- | ----------- | -------      
 `form` | required this.props.form | obj
 `formupdate` | required this.props.formupdate | function 
 `name` | The input name | string
@@ -789,6 +789,8 @@ Prop | Description | type
 `type` | This is used to specify the type of input, you can pass text, email, password, textarea, radio, select or checkbox. | string
 `required` | This only applies to the select, radio and checkbox input. For radio buttons just put required on the first radio button input and it will work because you can only select one input. For checkbox you have to apply required to each input you want to be required and the error gets grouped based on the checkbox name, meaning you can only display one error per category which is based on the name you pass to the input. | boolean
 `options` | This only applies to the select input and its an array of options | array
+`oddOptionClass` | odd classname for option selections | string
+`evenOptionClass` | even classname for option selections | string
 `value` | For radio and checkbox you need to pass a value prop with the input value | string
 `scrollUp` | For textarea only, if you need to scroll up when you're done typing. I use this in my contact form on my website because the submit button is on top of the textarea and it scrolls down a lot if you type a long message. | boolean
 
@@ -806,3 +808,19 @@ Prop | Description | type
 `successClassName` | classname if response is a success, this is only used for queries | string
 `matchError` | this is a response for inputs that required match. This is an obj that contains two properties matchName and error. matchName is the name you gave to all the inputs that need to match and error is the error if they don't | obj
 `selectError` | This is used to display the error from select, radio, or checkbox | string
+
+### Button
+This the component that is used to submit your form or go to the next or previous step of a multi-step form 
+
+Prop | Description | type
+---- | ----------- | -------
+`form` | required this.props.form | obj
+`formupdate` | required this.props.formupdate | function
+`disabled` | This is not required by you can pass this.props.disabled which gets passed from the HOC and it will disable the button until all the inputs are validated. | boolean
+`className` | This is the default className for the Button | string
+`disabledClassName` | classname applied to Button when disabled is true | string
+`url` | if the button type is submit you can pass a url and when you submit your data will be sent using JSON post request | string
+`extraData` | If you need to add extra data like a token to the request body you can put that here | obj
+`type` | valid types are submit, nextStep, or prevStep | string
+
+
