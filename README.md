@@ -816,8 +816,8 @@ Prop | Description | type
 ---- | ----------- | -------
 `form` | required this.props.form | obj
 `formupdate` | required this.props.formupdate | function
-`disabled` | This is not required by you can pass this.props.disabled which gets passed from the HOC and it will disable the button until all the inputs are validated. | boolean
-`className` | This is the default className for the Button | string
+`disabled` | This is not required but you can pass this.props.disabled which gets passed from the HOC and it will disable the button until all the inputs are validated. | boolean
+`className` | This is the default classname for the Button | string
 `disabledClassName` | classname applied to Button when disabled is true | string
 `url` | if the button type is submit you can pass a url and when you submit your data will be sent using JSON post request | string
 `extraData` | If you need to add extra data like a token to the request body you can put that here | obj
