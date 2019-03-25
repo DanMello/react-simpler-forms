@@ -3,7 +3,7 @@ React Higher Order component that manages all of your forms state along with oth
 
 * Zero dependencies.
 
-* 100% declarative.
+* 99.9% declarative.
 
 ### Requirements
 1. React and React-dom 16.5.2 or greater.
@@ -756,7 +756,7 @@ Demo page : [`https://mellocloud.com/react-simpler-forms`](https://mellocloud.co
 ### SimplerForm
 This is the higher order component that is used to manage all of your forms state and manage whether button is disabled or not. Simply wrap around a component where you want to create a new form.
 
-The higher order component passed down three props
+The higher order component passes down three props
 
 1. this.props.form
 2. this.props.updateform
@@ -770,6 +770,7 @@ Make sure you pass the form and updateform props using the same name
 form={this.props.form}
 formupdate={this.props.updateform}
 ```
+Note: You do not need to wrap your form with the standard <form /> tag, the SimplerForm HOC handles all post requests.
 
 ### Input
 This the component that is used to create all your inputs including text, email, password, textarea, select, radio, and checkbox
@@ -823,4 +824,32 @@ Prop | Description | type
 `extraData` | If you need to add extra data like a token to the request body you can put that here | obj
 `type` | valid types are submit, nextStep, or prevStep | string
 
+# More info
 
+### Custom Validators
+If you want to pass custom validators you can do so like this.
+
+```js
+
+nameisdan(value) {
+  
+  return value === 'dan'
+};
+
+<Input
+  validators={[
+    {method: this.nameisdan, error: 'Name is not equal to dan'}
+  ]}
+/>
+
+```
+
+# What I learned / Want to learn / Improved on
+
+1. I became a lot more comfortable with higher order functions like reduce, map, filter, and every. Not mutating objects and arrays is probably one of the most important things I've ever learned.
+
+2. As the logic got more complicated I realized it became too much to keep in my head which is why I'm starting to learn unit testing and TDD, I wish it was implemented in this project but maybe once I learn more about unit testing I'll implement it here but definitely in future projects.
+
+3. Half way through the project I realized I didn't need any of the dependencies I was using, they made my bundle size huge and I was barely utilizing them. So I removed all my dependencies and wrote some of my own code to do the same thing. For example I was using redux to manage the state of the forms before cause I though it was convenient but all I had to do was create a state in the HOC and some methods to update it, then pass down a function that returns a function which can run any of the other functions by passing the name and some data to update the state. This reduced my bundle size by half. I repeated the process with other dependencies. For prop-types all I did there was check some props then console.error if something is wrong. For axios I just made my own xhr function that can be reused for all my post requests.
+
+Thank you for checking out my project.
