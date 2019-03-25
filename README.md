@@ -762,7 +762,7 @@ The higher order component passed down three props
 2. this.props.updateform
 3. this.props.disabled
 
-All components required this.props.form and this.props.updateform. If you want to disable the button until validation then you can pass disabled={this.props.disabled} to the Button component.
+All components require this.props.form and this.props.updateform. If you want to disable the button until validation then you can pass disabled={this.props.disabled} to the Button component.
 
 Make sure you pass the form and updateform props using the same name
 
@@ -776,6 +776,8 @@ This the component that is used to create all your inputs including text, email,
 
 Prop | Description | type
 ---- | ----------- | -------
+`form` | required this.props.form | obj
+`formupdate` | required this.props.formupdate | function 
 `name` | The input name | string
 `className` | This is the default className for the input | string
 `focusedClassName` | When input is focused this classname will be applied to the input along with className | string
@@ -791,3 +793,16 @@ Prop | Description | type
 `scrollUp` | For textarea only, if you need to scroll up when you're done typing. I use this in my contact form on my website because the submit button is on top of the textarea and it scrolls down a lot if you type a long message. | boolean
 
 Aside from that you can pass other props that are normally used with inputs like autoComplete='off' or whatever.
+
+### Response
+This the component that is used to display a response whether an error or success from your input. 
+
+Prop | Description | type
+---- | ----------- | -------
+`form` | required this.props.form | obj
+`formupdate` | required this.props.formupdate | function 
+`for` | name of the input this is being applied to | string
+`errorClassName` | classname if response is an error | string
+`successClassName` | classname if response is a success, this is only used for queries | string
+`matchError` | this is a response for inputs that required match. This is an obj that contains two properties matchName and error. matchName is the name you gave to all the inputs that need to match and error is the error if they don't | obj
+`selectError` | This is used to display the error from select, radio, or checkbox | string
