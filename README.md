@@ -770,7 +770,7 @@ Make sure you pass the form and updateform props using the same name
 form={this.props.form}
 formupdate={this.props.updateform}
 ```
-Note: You do not need to wrap your form with the standard <form /> tag, the SimplerForm HOC handles all post requests.
+Note: You do not need to wrap your form with the standard form tag, the SimplerForm HOC handles all post requests.
 
 ### Input
 This the component that is used to create all your inputs including text, email, password, textarea, select, radio, and checkbox
