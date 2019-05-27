@@ -1,4 +1,7 @@
 # react-simpler-forms
+
+[![npm version](https://badge.fury.io/js/react-simpler-forms.svg)](//npmjs.com/package/react-simpler-forms)
+
 React Higher Order component that manages all of your forms state along with other components that make it easy to create, validate, perform search queries, and submit single or multi-step forms.
 
 * Zero dependencies.
@@ -850,6 +853,6 @@ nameisdan(value) {
 
 2. As the logic got more complicated I realized it became too much to keep in my head which is why I'm starting to learn unit testing and TDD, I wish it was implemented in this project but maybe once I learn more about unit testing I'll implement it here but definitely in future projects.
 
-3. Half way through the project I realized I didn't need any of the dependencies I was using, they made my bundle size huge and I was barely utilizing them. So I removed all my dependencies and wrote some of my own code to do the same thing. For example I was using redux to manage the state of the forms before cause I though it was convenient but all I had to do was create a state in the HOC and some methods to update it, then pass down a function that returns a function which can run any of the other functions by passing the name and some data to update the state. This reduced my bundle size by half. I repeated the process with other dependencies. For prop-types all I did there was check some props then console.error if something is wrong. For axios I just made my own xhr function that can be reused for all my post requests.
+3. Half way through the project I realized I didn't need any of the dependencies I was using, they made my bundle size huge and I was barely utilizing them. So I removed all my dependencies and wrote some of my own code to do the same thing. For example I was using redux to manage the state of the forms before cause I thought it was convenient but all I had to do was create a state in the HOC and some methods to update it, then pass down a function that returns a function which can run any of the other functions by passing the name and some data to update the state. This reduced my bundle size by half. I repeated the process with other dependencies. For prop-types all I did there was check some props then console.error if something is wrong. For axios I just made my own xhr function that can be reused for all my post requests.
 
 Thank you for checking out my project.
