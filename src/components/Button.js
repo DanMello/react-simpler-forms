@@ -30,8 +30,10 @@ export default class Button extends Component {
 
   validateAllInputs() {
 
-    let formData = this.props.form.data
+    let formData = {...this.props.form.data}
     let step = this.props.form.step
+
+    console.log('hey', formData)
 
     let payload = Object.keys(formData)
       .filter(property => formData[property].step === step)
@@ -39,7 +41,7 @@ export default class Button extends Component {
 
         let obj = {...acc}
 
-        if (formData[current].error === null && formData[current].value !== '' && formData[current].validators) {
+        if (formData[current].value !== '' && formData[current].validators) {
 
           obj[current] = {
             ...formData[current],
@@ -67,9 +69,7 @@ export default class Button extends Component {
             }
           }
         }
-
         return obj
-
       }, {})
 
     let allpasstest = allInputsErrorFalse(payload)

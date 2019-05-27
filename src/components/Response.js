@@ -17,13 +17,14 @@ export default class Response extends Component {
 
     let { errorClassName, successClassName, matchError, selectError, ...rest } = this.props
     let input = this.props.form.data[this.props.for]
-    let error, queryResponse, typing
+    let error, queryResponse, typing, queryVerified;
 
     if (input) {
 
       typing = input.typing
       error = input.error
       queryResponse = input.queryResponse
+      queryVerified = input.queryVerified
     }
 
     if (error === false && matchError) {
@@ -64,6 +65,6 @@ export default class Response extends Component {
       error = selectError
     }
 
-    return <div className={error ? errorClassName : successClassName}>{!typing ? queryResponse || error : null}</div>
+    return <div className={(error || !queryVerified) ? errorClassName : successClassName}>{!typing ? queryResponse || error : null}</div>
   }
 }
