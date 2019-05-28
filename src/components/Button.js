@@ -41,7 +41,7 @@ export default class Button extends Component {
 
         let obj = {...acc}
 
-        if (formData[current].value !== '' && formData[current].validators) {
+        if (formData[current].validators) {
 
           obj[current] = {
             ...formData[current],
